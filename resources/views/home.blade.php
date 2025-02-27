@@ -1,3 +1,6 @@
+{{-- [月森]
+laravel uiを入れた時に勝手に作られたやつ
+
 @extends('layouts.app')
 
 @section('content')
@@ -21,3 +24,5 @@
     </div>
 </div>
 @endsection
+
+ --}}

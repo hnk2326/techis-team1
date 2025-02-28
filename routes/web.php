@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// todo：～～:8000/(空白)でアクセスしたときの表示ページを変更するか？
 Route::get('/', function () {
     return view('welcome');
 });

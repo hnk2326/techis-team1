@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// todo：～～:8000/(空白)でアクセスしたときの表示ページを変更するか？
 Route::get('/', function () {
     return view('welcome');
 });
@@ -25,3 +26,9 @@ Route::get('user', function () {
 Route::get('user_edit', function () {
     return view('users.user_edit');
 });
+Route::get('/index', [App\Http\Controllers\ItemController::class, 'index']);
+Route::get('/side', function() {
+    return view('/side');
+});
+Route::get('/', [App\Http\Controllers\ItemController::class, 'index']);
+Route::get('/items', [App\Http\Controllers\ItemController::class, 'index']);

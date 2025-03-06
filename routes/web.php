@@ -24,4 +24,6 @@ Route::get('/side', function() {
     return view('/side');
 });
 Route::get('/', [App\Http\Controllers\ItemController::class, 'list']);
+Route::get('/', [App\Http\Controllers\ItemController::class, 'index']);
 Route::get('/items', [App\Http\Controllers\ItemController::class, 'index']);
+Route::get('/items', [App\Http\Controllers\ItemController::class, 'list']);

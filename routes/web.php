@@ -1,6 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+// ログイン認証用コントローラーをこのファイル内で使うよ！という宣言
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\User\UserRegisterController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -13,11 +17,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// todo：～～:8000/(空白)でアクセスしたときの表示ページを変更するか？
-Route::get('/', function () {
-    return view('welcome');
-});
-
 
 Route::get('user', function () {
     return view('users.user');
@@ -27,8 +26,37 @@ Route::get('user_edit', function () {
     return view('users.user_edit');
 });
 Route::get('/index', [App\Http\Controllers\ItemController::class, 'index']);
-Route::get('/side', function() {
-    return view('/side');
+// Route::get('/', [App\Http\Controllers\ItemController::class, 'index']);
+// http://127.0.0.1:8000 から表示される画面をログイン画面にする
+Route::get('/', function () {
+    return view('/auth.login');
 });
-Route::get('/', [App\Http\Controllers\ItemController::class, 'index']);
 Route::get('/items', [App\Http\Controllers\ItemController::class, 'index']);
+
+
+// 動作確認用の仮のホーム画面のルーティング（月森
+// 仮のホーム画面 home.blade.phpも作ってありますが内容はほぼ白紙です
+Route::get('/home', function() {
+    return view('/morimotos.home');
+});
+
+// ユーザー登録画面を表示
+Route::get('/UserRegister', [UserRegisterController::class, 'showUserRegister']);
+// アカウント作成コントローラ呼び出し
+Route::post('/UserRegister', [UserRegisterController::class, 'UserRegister']);
+
+// ログイン画面を表示する
+Route::get('/login', function () {
+    return view('/auth.login');
+});
+
+// ログイン画面でログインボタンを押したらログイン認証用のコントローラーを呼び出す
+Route::post('/login', [AuthController::class, 'login']);
+// ログアウトボタンを押したらログイン認証用のコントローラーを呼び出してログアウトする
+Route::post('/logout', [AuthController::class, 'logout']);
+// ログイン動作確認用のページです。最後には消します。
+Route::get('/login-test', function () {
+    return view('auth.login-test');
+})->middleware('auth'); // このmiddleware(auth)を付けるとログイン中専用のページになります。あとで月森が付けていきます。説明もします。
+// この時にでるエラーは後で対応します！
+

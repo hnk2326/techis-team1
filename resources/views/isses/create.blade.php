@@ -1,4 +1,4 @@
-@extends('morimotos.layout')
+@extends('items.layout')
 
 @section('content')
 <div class="container">

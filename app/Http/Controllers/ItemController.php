@@ -38,7 +38,7 @@ class ItemController extends Controller
           $items = $query->orderBy('date')->get();
 
           // compactの方が可読性が高いのでそちらを使うことが多い。
-      return view('morimotos.index', compact('search', 'query', 'message', 'items'));
+      return view('items.index', compact('search', 'query', 'message', 'items'));
       // view側では通常の変数名で展開可能  {{ $message }}    
 
     }

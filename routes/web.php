@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ItemController;
-// ログイン認証用コントローラーをこのファイル内で使うよ！という宣言
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\User\UserRegisterController;
 
@@ -20,7 +19,7 @@ use App\Http\Controllers\User\UserRegisterController;
 
 // 商品一覧画面
 Route::get('/index', [App\Http\Controllers\ItemController::class, 'index']);
-// Route::get('/', [App\Http\Controllers\ItemController::class, 'index']);
+
 // http://127.0.0.1:8000 から表示される画面をログイン画面にする
 Route::get('/', function () {
     return view('/auth.login');

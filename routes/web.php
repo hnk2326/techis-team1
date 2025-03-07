@@ -18,7 +18,7 @@ use App\Http\Controllers\User\UserRegisterController;
 |
 */
 
-
+// 商品一覧画面
 Route::get('/index', [App\Http\Controllers\ItemController::class, 'index']);
 // Route::get('/', [App\Http\Controllers\ItemController::class, 'index']);
 // http://127.0.0.1:8000 から表示される画面をログイン画面にする
@@ -32,9 +32,9 @@ Route::get('/create', [App\Http\Controllers\ItemController::class, 'create']);
 Route::post('/itemCreate', [App\Http\Controllers\ItemController::class, 'itemCreate']);
 
 // 動作確認用の仮のホーム画面のルーティング（月森
-// 仮のホーム画面 home.blade.phpも作ってありますが内容はほぼ白紙です
+// 仮のホーム画面 home.blade.phpも作ってありますが内容はほぼ白紙です。承知しました(森本)
 Route::get('/home', function() {
-    return view('/morimotos.home');
+    return view('/items.home');
 });
 
 // ユーザー登録画面を表示

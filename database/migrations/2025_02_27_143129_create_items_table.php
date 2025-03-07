@@ -17,8 +17,8 @@ return new class extends Migration
             $table->biginteger('user_id')->unsigned()->index();	
             $table->date('date');	
             $table->string('item_name', 100);	
-            $table->biginteger('price');	
-            $table->string('detail', 500);	
+            $table->biginteger('price')->nullable();	
+            $table->string('detail', 500)->nullable();	
             $table->timestamps();
         });
     }

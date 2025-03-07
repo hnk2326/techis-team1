@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ItemController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,3 +26,7 @@ Route::get('/side', function() {
 });
 Route::get('/', [App\Http\Controllers\ItemController::class, 'index']);
 Route::get('/items', [App\Http\Controllers\ItemController::class, 'index']);
+
+// 商品登録
+Route::get('/create', [App\Http\Controllers\ItemController::class, 'create']);
+Route::post('/itemCreate', [App\Http\Controllers\ItemController::class, 'itemCreate']);

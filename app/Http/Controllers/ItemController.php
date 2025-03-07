@@ -38,7 +38,7 @@ class ItemController extends Controller
           $items = $query->orderBy('date')->get();
 
           // compactの方が可読性が高いのでそちらを使うことが多い。
-      return view('morimotos.index', compact('search', 'query', 'message', 'items'));
+      return view('items.index', compact('search', 'query', 'message', 'items'));
       // view側では通常の変数名で展開可能  {{ $message }}    
 
     }
@@ -73,5 +73,29 @@ class ItemController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    /**
+     * 商品登録
+     */
+    public function create()
+    {
+        // 商品登録画面を表示
+        return view('isses.create'); 
+    }
+
+    public function itemCreate(Request $request)
+    {
+        // 新しい商品を登録
+        $item = new Item();
+        $item->user_id = 1;
+        $item->date = $request->date;
+        $item->item_name = $request->item_name;
+        $item->category_id = $request->category_id;
+        $item->price = $request->price;
+        $item->detail = $request->detail;
+        $item->save();
+
+        return redirect('/index');
     }
 }

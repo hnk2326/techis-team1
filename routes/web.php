@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ItemController;
 // ログイン認証用コントローラーをこのファイル内で使うよ！という宣言
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\User\UserRegisterController;
@@ -25,6 +26,7 @@ Route::get('user', function () {
 Route::get('user_edit', function () {
     return view('users.user_edit');
 });
+// 商品一覧画面
 Route::get('/index', [App\Http\Controllers\ItemController::class, 'index']);
 // Route::get('/', [App\Http\Controllers\ItemController::class, 'index']);
 // http://127.0.0.1:8000 から表示される画面をログイン画面にする
@@ -33,11 +35,14 @@ Route::get('/', function () {
 });
 Route::get('/items', [App\Http\Controllers\ItemController::class, 'index']);
 
+// 商品登録
+Route::get('/create', [App\Http\Controllers\ItemController::class, 'create']);
+Route::post('/itemCreate', [App\Http\Controllers\ItemController::class, 'itemCreate']);
 
 // 動作確認用の仮のホーム画面のルーティング（月森
-// 仮のホーム画面 home.blade.phpも作ってありますが内容はほぼ白紙です
+// 仮のホーム画面 home.blade.phpも作ってありますが内容はほぼ白紙です。承知しました(森本)
 Route::get('/home', function() {
-    return view('/morimotos.home');
+    return view('/items.home');
 });
 
 // ユーザー登録画面を表示

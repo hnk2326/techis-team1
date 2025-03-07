@@ -1,4 +1,3 @@
-<!-- このやり方が使えない? -->
 @if (count($errors) > 0)
 <!-- フォームのエラーリスト -->
 <div class="alert alert-danger">

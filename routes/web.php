@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ItemController;
 // ログイン認証用コントローラーをこのファイル内で使うよ！という宣言
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\User\UserRegisterController;
@@ -26,6 +27,9 @@ Route::get('/', function () {
 });
 Route::get('/items', [App\Http\Controllers\ItemController::class, 'index']);
 
+// 商品登録
+Route::get('/create', [App\Http\Controllers\ItemController::class, 'create']);
+Route::post('/itemCreate', [App\Http\Controllers\ItemController::class, 'itemCreate']);
 
 // 動作確認用の仮のホーム画面のルーティング（月森
 // 仮のホーム画面 home.blade.phpも作ってありますが内容はほぼ白紙です

@@ -74,4 +74,27 @@ class ItemController extends Controller
     {
         //
     }
+
+    /**
+     * 商品登録
+     */
+    public function create()
+    {
+        // 商品登録画面を表示
+        return view('isses.create'); 
+    }
+
+    public function itemCreate(Request $request)
+    {
+        // 新しい商品を登録
+        $item = new Item();
+        $item->date = $request->date;
+        $item->item_name = $request->item_name;
+        $item->category_id = $request->category_id;
+        $item->price = $request->price;
+        $item->detail = $request->detail;
+        $item->save();
+
+        return redirect('morimotos.index');
+    }
 }

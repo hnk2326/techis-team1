@@ -88,6 +88,7 @@ class ItemController extends Controller
     {
         // 新しい商品を登録
         $item = new Item();
+        $item->user_id = 1;
         $item->date = $request->date;
         $item->item_name = $request->item_name;
         $item->category_id = $request->category_id;
@@ -95,6 +96,6 @@ class ItemController extends Controller
         $item->detail = $request->detail;
         $item->save();
 
-        return redirect('morimotos.index');
+        return redirect('/index');
     }
 }

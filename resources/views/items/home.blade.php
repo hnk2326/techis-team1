@@ -1,12 +1,6 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
+@extends('layouts.app')
+
+@section('content')
 
     <p>
         ホーム画面(仮)、コンフリクトしたら全部消してください（月森
@@ -26,13 +20,29 @@
     @else <!-- エラーがなければ以下を実行 -->
         ログインに成功しました。<br>（もしくは直接このページを表示しました）
     @endif
-    <p>
-        <form action="{{ url('logout') }}" method="POST">
 
-            @csrf
-            <button type="submit">
-                ログアウトしてログイン画面にいく</p>
-            </button>
-        </form>
-</body>
-</html>
+
+        <style>
+            .botantachi {
+                height:auto;
+            }
+            button {
+                width:150px;
+                height:2rem;
+
+            }
+        </style>
+        <div class="botantachi w-75 mx-auto my-4">
+            <form action="{{ url('logout') }}" method="POST">
+                @csrf
+                <span class="fw-bold">ログアウトしてから</span>
+                <button type="submit" class="overflow-visible btn btn-secondary my-2">
+                    ログイン画面
+                </button>
+            </form>
+            <span class="fw-bold">ログインしたまま</span>
+                <a href="{{ url('/index') }}" class="btn btn-success mx-2" role="button">商品の一覧画面</a>
+                <a href="{{ url('/create') }}" class="btn btn-success mx-2" role="button">商品の登録画面</a>
+        </div>
+
+@endsection

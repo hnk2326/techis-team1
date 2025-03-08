@@ -1,73 +1,63 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+{{-- <!-- /view/layouts/app.blade.php をテンプレートとして読み込む --> --}}
+@extends('layouts/app')
+
+{{--
+    上記テンプレート内の ＠yield('★★★★') の部分に
+        ＠section(' ★★★★ ')
+        ＠endsection
+    で囲まれた部分を差し込むようにくっつけて表示させる。
+    テンプレートの ＠yield('content') の上に書かれている<HTML><HEAD><BODY>や
+    <div>などのタグや設定などをそのまま使い（継承）し、section～endsection内のHTMLを表示する
+--}}
+
+@section('content')
+
+    <div class="auth-container w-75 mx-auto mt-5 d-flex flex-column align-items-center">
+
+        <h3 class="page-title fst-italic mb-5">商品管理システム</h3>
+
+            {{-- ログイン失敗エラーの表示
+            AuthControllerから送られてきた &errorsの中身があれば表示する
+            all() でforeachで使える形にして $error １つずつ格納して全て表示する --}}
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul class="error-msg-list">
+                        @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+            {{-- ここまで　ログインエラー --}}
 
 
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>{{ config('app.name', 'Laravel') }}</title>
-
-    <!-- Scripts -->
-    {{-- bootstrapを適用 --}}
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-    {{-- bootstrapでキレイにならないときはオリジナルstyle.cssを使う --}}
-    <link rel="stylesheet" href="{{ asset('/css/style.css')}}">
-
-</head>
-<body>
-
-    <div id="app">
-        <div class="container">
-            <div class="auth-wrapper">
-
-                <h3 class="page-title italic">商品管理システム</h3>
-                {{-- ログイン用のフォームを設置 --}}
-
-                <form action="{{ url('login') }}" class="login-form form" method="POST">
-                    {{-- ログイン失敗エラーの表示
-                    AuthControllerから送られてきた &errorsの中身があれば表示する
-                    all() でforeachで使える形にして $error １つずつ格納して全て表示する --}}
-                    @if ($errors->any())
-                    <div class="alert">
-                        <ul class="error-msg-list">
-                            @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                    @endif
-
-                    @csrf <!-- CSRF対策のlaravel bladeの短縮ディレクティブ -->
-                    {{-- みんなが慣れてきたら消します！！ --}}
-                    <p><b>
-                        <span style="color:brown; background-color:yellowgreen">あとで必ず消します！</span> <br>
+        {{-- みんなが慣れてきたら消します！！ --}}
+        <p class="skip-login-cheat alert alert-warning"><b>
+            <span class="bg-info">あとで必ず消します！</span> <br>
                         ログインの手間が面倒なので、しばらく最初からログイン情報をフォームにいれています。<br>
                         user: taro@example.com <br>
                         password: taropass <br>
-                        <span style="color:brown; background-color:yellowgreen">あとで必ず消します！</span>
-                    </b></p>
-                    {{-- ここまで　みんなが慣れてきたら消します！！ --}}
+            <span class="bg-info">あとで必ず消します！</span>
+        </b></p>
+        {{-- ここまで　消します！！ --}}
 
 
-                    <div class="user-form-label">メールアドレス</div>
-                    <input type="email" name="email" placeholder="メールアドレス" value="taro@example.com" >
-                    <div class="user-form-label">パスワード</div>
-                    <input type="password" name="password" placeholder="パスワード" value="taropass">
+        {{-- ログイン用のフォームを設置 --}}
+        <div class="input-form-wrapper w-50 mx-auto">
+            <form action="{{ url('login') }}" class="login-form" method="POST">
+                @csrf
 
-                    <div class="login-btn-wrapper">
-                        <button type="submit" class="btn login-btn">ログイン</button>
-                        <a href="{{ url('UserRegister') }}">登録</a>
-                    </div>
-                </form>
-            </div>
+                <div class="user-form-label">メールアドレス</div>
+                <input type="email" name="email" class="w-100" placeholder="メールアドレス" value="taro@example.com" autofocus>
+                <div class="user-form-label">パスワード</div>
+                <input type="password" name="password" class="w-100" placeholder="パスワード" value="taropass">
+
+                <div class="login-btn-wrapper py-2 d-flex justify-content-evenly">
+                    <button type="submit" class="login-btn btn btn-secondary w-25">ログイン</button>
+                    <a href="{{ url('UserRegister') }}" class="btn btn-secondary w-25" role="button">登録</a>
+                </div>
+            </form>
         </div>
-
     </div>
 
-
-</body>
-</html>
+@endsection

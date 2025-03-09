@@ -53,6 +53,8 @@ Route::post('/logout', [AuthController::class, 'logout']);
 // ログイン動作確認用のページです。最後には消します。
 Route::get('/login-test', function () {
     return view('auth.login-test');
-})->middleware('auth'); // このmiddleware(auth)を付けるとログイン中専用のページになります。あとで月森が付けていきます。説明もします。
-// この時にでるエラーは後で対応します！
+})->middleware('auth');
+
+
+
 

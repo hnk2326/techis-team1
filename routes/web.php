@@ -20,6 +20,8 @@ use App\Http\Controllers\User\UserRegisterController;
 // 商品一覧画面
 Route::get('/index', [App\Http\Controllers\ItemController::class, 'index']);
 
+Route::get('/category', [App\Http\Controllers\CategoryController::class, 'index']);
+// Route::get('/', [App\Http\Controllers\ItemController::class, 'index']);
 // http://127.0.0.1:8000 から表示される画面をログイン画面にする
 Route::get('/', function () {
     return view('/auth.login');

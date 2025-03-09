@@ -31,6 +31,8 @@ class AuthController extends Controller
         // もう一度ログインをする必要はないので、操作ミスということにしてホーム画面へリダイレクト・遷移させる
 
         // [月森]　念のため実装を見送ります
+
+        // session()->flash('message', 'すでにログインしています。');
         // $this->middleware('guest');
     }
 
@@ -55,14 +57,20 @@ class AuthController extends Controller
 
         // ログイン操作が短時間に繰り返されたときの危険回避
         // Auth::attempt 取得した情報と今のログインユーザーの情報を照らし合わせる
+        //
+        // (03/08)思い違いをしていました
+        // Auth::attempt でデータベースの情報とリクエストされた情報を照合し
+        // 合致していたらtrue → ログインするための ifコードを実行
+        // でなければ falseで ifをスキップ
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             // ブラウザのセッション情報を再生成(regenerate)して、ログインしようとする動作をリセットする
             $request->session()->regenerate();
             // ログイン後の画面に遷移させる
-            return redirect()->intended('home');
+            // return redirect()->intended('home'); 都合が悪いので変更します。（月森
+            return redirect('home');
         }
 
-        // ユーザー情報のメールアドレスが間違っていたらエラーエラーメッセージを表示させる
+        // ユーザー情報のメールアドレスかパスワードが間違っていたらエラーメッセージを表示させる
         return back()->withErrors([
             'email' => '入力された登録情報が間違っています。',
         ]);

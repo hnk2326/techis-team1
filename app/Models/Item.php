@@ -22,8 +22,8 @@ class Item extends Model
     ];
 
     protected $casts = [  // 型変換
-        'created_at' => 'datetime:Y-m-d',
-        'updated_at' => 'datetime:Y-m-d',
+        'created_at' => 'datetime:Y/m/d',
+        'updated_at' => 'datetime:Y/m/d',
     ];
 
     // 所属テーブルから主テーブルへの関係を定義するときに使う

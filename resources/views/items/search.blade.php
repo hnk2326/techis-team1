@@ -4,7 +4,7 @@
     {{ csrf_field() }}          <!-- CSRFトークン -->
         <div class="row gy-0 gx-3 align-items-center">
             <div class="col-md-2">
-                <label for="formGroupExampleInput" class="form-label">キーワード：　</label>
+                <label for="formGroupExampleInput" class="d-flex flex-row-reverse">キーワード：</label>
             </div>
             <div class="col-md-4">
                 <input type="text" name="search" value="{{ request('search') }}" class="form-control" id="formGroupExampleInput" placeholder="キーワードで検索できます">

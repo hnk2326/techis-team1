@@ -27,19 +27,26 @@ class ItemController extends Controller
             ->orWhere('date', 'like', '%' .$search. '%')
             ->orWhere('price', 'like', '%' .$search. '%')
             ->orWhere('detail', 'like', '%' .$search. '%');
-
+        $totalPrice = Item::where('item_name', 'like', '%' .$search. '%') // 
+            ->orWhere('id', 'like', '%' .$search. '%')
+            ->orWhere('user_id', 'like', '%' .$search. '%')
+            ->orWhere('date', 'like', '%' .$search. '%')
+            ->orWhere('price', 'like', '%' .$search. '%')
+            ->orWhere('detail', 'like', '%' .$search. '%')
+            ->sum('price');
         } else {     // 未入力の場合
             $message = "検索キーワードを入力してください。";
             // 未入力なら、全データ表示
             $items = Item::all();
+            $totalPrice = Item::all()->sum('price');
         }
           // 変数を一つ受け渡す場合はcompact関数又はwithメソッドで送信。
 
-          $items = $query->orderBy('date')->get();
+          $items = $query->orderBy('date')->paginate(10)->withQueryString();
 
           // compactの方が可読性が高いのでそちらを使うことが多い。
-      return view('items.index', compact('search', 'query', 'message', 'items'));
-      // view側では通常の変数名で展開可能  {{ $message }}    
+        return view('items.index', compact('search', 'query', 'message', 'items', 'totalPrice'));
+        // view側では通常の変数名で展開可能  {{ $message }}    
 
     }
 

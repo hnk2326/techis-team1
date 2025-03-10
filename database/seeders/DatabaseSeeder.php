@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\Item;
 
 class DatabaseSeeder extends Seeder
 {
@@ -12,6 +13,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        
+        // アイテムを50件作成
+        Item::factory(50)->create();
+
         // \App\Models\User::factory(10)->create();
 
         // \App\Models\User::factory()->create([

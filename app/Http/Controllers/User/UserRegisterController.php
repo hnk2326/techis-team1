@@ -62,9 +62,8 @@ class UserRegisterController extends Controller
             'role' => $request->role,
         ]);
 
-        // ToDo：アカウント認証ログイン機能を実装したらこコメント外す
         // アカウント作成に成功したらそのままログインする、の一行
-        // Auth::login($user);
+        Auth::login($user);
 
         // ホーム画面に遷移する
         return redirect('home');

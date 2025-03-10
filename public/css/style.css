@@ -1,0 +1,13 @@
+/* -----------------------------
+* サイドバーのCSS
+------------------------------ */
+
+/* サイドバーの各画面へのリンク */
+.side-page-list-wrapper a {
+    color: blue;
+    font-weight: bolder;
+}
+/* ログインの注意書き部分 縮小 0.8倍 そのうち消します */
+.skip-login-cheat {
+    transform: scale(0.8);
+}

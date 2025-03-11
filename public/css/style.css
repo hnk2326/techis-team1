@@ -11,3 +11,21 @@
 .skip-login-cheat {
     transform: scale(0.8);
 }
+
+.main-content {
+    width: 100%;
+    height:100vh;
+    background-image: url(../img/home_image.jpg);  
+    /* 画面、ブラウザのサイズに基づいて、背景画像を調整。 画像を画面に合わせて拡大 */
+    background-size: cover;
+    /* 画像を常に上下左右の中央に配置させる。 */
+    background-position: center center; 
+    /* 画像を繰り返し表示しないようにする。 */
+    background-repeat: no-repeat;  
+    /* ページなどのコンテンツの高さが画像より大きい場合は自動で調整してくれる。 */
+    /* background-attachment: fixed;  */
+
+    padding-left: 250px;  /* サイドバーの幅に合わせて左側に余白を追加 */
+    margin: 0;
+    padding: 0;
+}

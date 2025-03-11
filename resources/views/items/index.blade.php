@@ -65,10 +65,10 @@
                                         <td>
                                             <div class="action-buttons">
                                                 <a href="edit/{{$item->id}}" class="btn btn-success-emphasis bg-success-subtle" style="padding: 2px 16px;">編集</a>
-                                                <form method="POST" action="destroy/{{$item->id}}" style="display:inline;">
+                                                <form method="POST" action="itemDestroy/{{$item->id}}" style="display:inline;">
                                                     @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger-emphasis bg-danger-subtle" style="padding: 2px 16px;" onclick="return confirm('削除しますか？')">削除</button>
+                                                    @method('POST')
+                                                    <input type="submit" value="削除" class="btn btn-danger-emphasis bg-danger-subtle" style="padding: 2px 16px;" onclick="return confirm('削除しますか？')">
                                                 </form>
                                             </div>
                                         </td>

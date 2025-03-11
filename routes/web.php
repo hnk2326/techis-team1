@@ -56,10 +56,27 @@ Route::get('/login', function () {
 Route::post('/login', [AuthController::class, 'login']);
 // ログアウトボタンを押したらログイン認証用のコントローラーを呼び出してログアウトする
 Route::post('/logout', [AuthController::class, 'logout']);
-// ログイン動作確認用のページです。最後には消します。
-Route::get('/login-test', function () {
-    return view('auth.login-test');
-})->middleware('auth');
+
+// ####################################
+// ログイン認証および管理者権限の動作確認用
+// そのうち消します。
+// #### 試したい人へ
+// #### 管理者権限を付けたアカウントと、管理者権限のないアカウントを作り
+// #### 下記のアドレスを直接開いてください（リンク無いです）
+// #### http:/127.0.0.1:8000/login-test
+// ####                      ^^^^^^^^^^
+Route::group([],function () {
+
+    // ログイン動作確認用のページ
+    Route::get('/login-test', function () {
+        return view('auth.login-test');
+    });
+
+    // 管理者権限のみ閲覧できるページの確認用
+    Route::get('/admin-test', fn () => view('auth.admin-test'))->can('admin'); // ログイン中 かつ 管理者権限でしか開けない （ログイン中のフィルターは実質意味がないです）
+
+})->middleware('auth'); // ログイン中にしか開けない
+// ####################################
 
 
 

@@ -21,6 +21,9 @@ use App\Http\Controllers\User\UserRegisterController;
 Route::get('/index', [App\Http\Controllers\ItemController::class, 'index']);
 
 Route::get('/category', [App\Http\Controllers\CategoryController::class, 'index']);
+// 商品を１件削除
+Route::post('/itemDestroy/{id}', [App\Http\Controllers\ItemController::class, 'destroy']);
+
 // Route::get('/', [App\Http\Controllers\ItemController::class, 'index']);
 // http://127.0.0.1:8000 から表示される画面をログイン画面にする
 Route::get('/', function () {

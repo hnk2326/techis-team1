@@ -32,6 +32,10 @@ Route::get('/items', [App\Http\Controllers\ItemController::class, 'index']);
 Route::get('/create', [App\Http\Controllers\ItemController::class, 'create']);
 Route::post('/itemCreate', [App\Http\Controllers\ItemController::class, 'itemCreate']);
 
+// 商品編集
+Route::get('/edit/{id}', [App\Http\Controllers\ItemController::class, 'edit']);
+Route::post('/itemEdit/{id}', [App\Http\Controllers\ItemController::class, 'itemEdit']);
+
 // 動作確認用の仮のホーム画面のルーティング（月森
 // 仮のホーム画面 home.blade.phpも作ってありますが内容はほぼ白紙です。承知しました(森本)
 Route::get('/home', function() {

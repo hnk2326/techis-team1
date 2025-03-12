@@ -124,7 +124,7 @@ class ItemController extends Controller
         // 既存の商品情報を取得して、編集内容を保存し一覧画面に戻る
         $item = Item::find($id);
 
-        $item->user_id = 1; // 最終的にはログインユーザーのIDが入るようにする
+        $item->user_id = 1;
         $item->date = $request->date;
         $item->item_name = $request->item_name;
         $item->category_id = $request->category_id;

@@ -16,16 +16,7 @@
             <input type="email" name="email" class="form-control" value="{{ old('email', $user->email) }}" required>
         </div>
 
-        <div class="mb-3">
-            <label class="form-label">新しいパスワード（変更する場合のみ入力）</label>
-            <input type="password" name="password" class="form-control" placeholder="8文字以上">
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label">新しいパスワード（確認用）</label>
-            <input type="password" name="password_confirmation" class="form-control">
-        </div>
-
+        
         <button type="submit" class="btn btn-success">更新</button>
         <a href="{{ route('users.index') }}" class="btn btn-secondary">キャンセル</a>
     </form>

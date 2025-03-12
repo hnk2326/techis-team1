@@ -1,33 +1,44 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ユーザー</title>
-<center>
-<h1>ユーザー編集</h1>
+@extends('layouts.app')
 
+@section('content')
+<div class="container">
+    <h2>ユーザー管理</h2>
 
+    @if(session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+    @endif
 
-    <label for="name">ユーザー名 </label><br>
-    <input id="name" type="text" name="name" placeholder="山田太郎"><br>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>名前</th>
+                <th>メールアドレス</th>
+                <th>登録日</th>
 
-    <label for="status">ステータス</label><br>
-    <input id="status" type="text" name="status"><br>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($users as $user)
+                <tr>
+                    <td>{{ $user->id }}</td>
+                    <td>{{ $user->name }}</td>
+                    <td>{{ $user->email }}</td>
+                    <td>{{ $user->created_at }}</td>
 
-    <label for="email">メールアドレス</label><br>
-    <input id="email" type="email" name="email" placeholder="taro.yammada@google.com"><br>
-
-
-    <label for="password">パスワード</label><br>
-    <input id="password" name="password" ></input><br>
-    <label for="password"> </label><br>
-    <input id="password" name="password" ></input><br>
-
-    </div>
-<br>
-    <button type="submit">編集</button> <button type="submit">戻る</button>
-  </form>
-
+                    <td>
+                        <a href="{{ route('users.edit', $user->id) }}" class="btn btn-primary btn-sm">編集</a>
+                        
+                        <form action="{{ route('users.destroy', $user->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('本当に削除しますか？');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-sm">削除</button>
+                        </form>
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
 </div>
-</center>
+@endsection

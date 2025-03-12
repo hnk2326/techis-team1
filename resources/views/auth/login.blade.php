@@ -1,14 +1,12 @@
-{{-- <!-- /view/layouts/app.blade.php をテンプレートとして読み込む --> --}}
+<!-- /view/layouts/app.blade.php をテンプレートとして読み込む -->
 @extends('layouts/app')
 
-{{--
-    上記テンプレート内の ＠yield('★★★★') の部分に
-        ＠section(' ★★★★ ')
-        ＠endsection
+<!-- 上記テンプレート内の ＠yield('★★★★') の部分に
+    ＠section(' ★★★★ ')
+    ＠endsection
     で囲まれた部分を差し込むようにくっつけて表示させる。
     テンプレートの ＠yield('content') の上に書かれている<HTML><HEAD><BODY>や
-    <div>などのタグや設定などをそのまま使い（継承）し、section～endsection内のHTMLを表示する
---}}
+    <div>などのタグや設定などをそのまま使い（継承）し、section～endsection内のHTMLを表示する-->
 
 @section('content')
 
@@ -16,9 +14,9 @@
 
         <h3 class="page-title fst-italic mb-5">商品管理システム</h3>
 
-            {{-- ログイン失敗エラーの表示
+            <!-- ログイン失敗エラーの表示
             AuthControllerから送られてきた &errorsの中身があれば表示する
-            all() でforeachで使える形にして $error １つずつ格納して全て表示する --}}
+            all() でforeachで使える形にして $error １つずつ格納して全て表示する -->
             @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul class="error-msg-list">
@@ -28,10 +26,10 @@
                     </ul>
                 </div>
             @endif
-            {{-- ここまで　ログインエラー --}}
+            <!-- ここまで　ログインエラー -->
 
 
-        {{-- みんなが慣れてきたら消します！！ --}}
+        <!-- みんなが慣れてきたら消します！！ -->
         <p class="skip-login-cheat alert alert-warning"><b>
             <span class="bg-info">あとで必ず消します！</span> <br>
                         ログインの手間が面倒なので、しばらく最初からログイン情報をフォームにいれています。<br>
@@ -39,10 +37,10 @@
                         password: taropass <br>
             <span class="bg-info">あとで必ず消します！</span>
         </b></p>
-        {{-- ここまで　消します！！ --}}
+        <!-- ここまで　消します！！ -->
 
 
-        {{-- ログイン用のフォームを設置 --}}
+        <!-- ログイン用のフォームを設置 -->
         <div class="input-form-wrapper w-50 mx-auto">
             <form action="{{ url('login') }}" class="login-form" method="POST">
                 @csrf

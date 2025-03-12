@@ -51,35 +51,14 @@ class ItemController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-        //
+        $item = Item::find($id);
+        $item->delete();
+        
+        return redirect('/index');
     }
 
     /**
@@ -88,7 +67,7 @@ class ItemController extends Controller
     public function create()
     {
         // 商品登録画面を表示
-        return view('isses.create'); 
+        return view('items.create'); 
     }
 
     public function itemCreate(Request $request)
@@ -96,6 +75,35 @@ class ItemController extends Controller
         // 新しい商品を登録
         $item = new Item();
         $item->user_id = 1;
+        $item->date = $request->date;
+        $item->item_name = $request->item_name;
+        $item->category_id = $request->category_id;
+        $item->price = $request->price;
+        $item->detail = $request->detail;
+        $item->save();
+
+        return redirect('/index');
+    }
+
+    /**
+     * 商品編集
+     */
+    public function edit(Request $request, $id)
+    {
+        // 一覧画面で指定されたIDの情報を取得
+        $item = Item::find($id);
+
+        return view('items.edit')->with([
+            'item' => $item,
+        ]);
+    }
+
+    public function ItemEdit(Request $request, $id){
+
+        // 既存の商品情報を取得して、編集内容を保存し一覧画面に戻る
+        $item = Item::find($id);
+
+        $item->user_id = 1; // 最終的にはログインユーザーのIDが入るようにする
         $item->date = $request->date;
         $item->item_name = $request->item_name;
         $item->category_id = $request->category_id;

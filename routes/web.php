@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\User\UserRegisterController;
-
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -83,4 +83,8 @@ Route::group([],function () {
 
 
 
-
+// User
+Route::get('/user', [UserController::class, 'index'])->name('users.index'); // ユーザー管理画面
+Route::get('/user/{id}/edit', [UserController::class, 'edit'])->name('users.edit'); // ユーザー編集画面
+Route::post('/user/{id}/update', [UserController::class, 'update'])->name('users.update'); // ユーザー更新
+Route::delete('/user/{id}', [UserController::class, 'destroy'])->name('users.destroy');// ユーザー削除

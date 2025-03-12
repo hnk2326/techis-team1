@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('items', function (Blueprint $table) {
             $table->id()->autoIncrement()->unsigned();	
-            $table->biginteger('category_id')->unsigned()->index();	
+            $table->biginteger('category_id')->unsigned()->index()->nullable();	
             $table->biginteger('user_id')->unsigned()->index();	
             $table->date('date');	
             $table->string('item_name', 100);	

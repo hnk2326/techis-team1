@@ -12,7 +12,7 @@
 
     <div class="auth-container w-75 mx-auto mt-5 d-flex flex-column align-items-center">
 
-        <h3 class="page-title fst-italic mb-5">商品管理システム</h3>
+        <h3 class="page-title fst-italic mb-5 row">商品管理システム</h3>
 
             <!-- ログイン失敗エラーの表示
             AuthControllerから送られてきた &errorsの中身があれば表示する
@@ -29,7 +29,7 @@
             <!-- ここまで　ログインエラー -->
 
 
-        <!-- みんなが慣れてきたら消します！！ -->
+        {{-- <!-- みんなが慣れてきたら消します！！ -->
         <p class="skip-login-cheat alert alert-warning"><b>
             <span class="bg-info">あとで必ず消します！</span> <br>
                         ログインの手間が面倒なので、しばらく最初からログイン情報をフォームにいれています。<br>
@@ -37,22 +37,27 @@
                         password: taropass <br>
             <span class="bg-info">あとで必ず消します！</span>
         </b></p>
-        <!-- ここまで　消します！！ -->
+        <!-- ここまで　消します！！ --> --}}
 
 
         <!-- ログイン用のフォームを設置 -->
-        <div class="input-form-wrapper w-50 mx-auto">
+        <div class="input-form-wrapper w-50 mx-auto row">
             <form action="{{ url('login') }}" class="login-form" method="POST">
                 @csrf
 
-                <div class="user-form-label">メールアドレス</div>
-                <input type="email" name="email" class="w-100" placeholder="メールアドレス" value="taro@example.com" autofocus>
-                <div class="user-form-label">パスワード</div>
-                <input type="password" name="password" class="w-100" placeholder="パスワード" value="taropass">
+                <div class="mb-4">
+                    <label for="email" class="form-label">メールアドレス</label>
+                    <input id="email" type="email" name="email" class="w-100 border-secondary form-control" placeholder="" value="{{ old('email') }}" autofocus>
+                </div>
 
-                <div class="login-btn-wrapper py-2 d-flex justify-content-evenly">
-                    <button type="submit" class="login-btn btn btn-secondary w-25">ログイン</button>
-                    <a href="{{ url('UserRegister') }}" class="btn btn-secondary w-25" role="button">登録</a>
+                <div class="mb-4">
+                    <label for="password" class="form-label">パスワード</label>
+                    <input id="password" type="password" name="password" class="w-100 border-secondary form-control" placeholder="" value="">
+                </div>
+
+                <div class="login-btn-wrapper py-2 d-grid d-md-flex justify-content-md-center">
+                    <button type="submit" class="login-btn btn btn-primary w-100 m-2 mx-lg-3">ログイン</button>
+                    <a href="{{ url('UserRegister') }}" class="btn btn-secondary w-100 m-2 mx-lg-3" role="button">登録</a>
                 </div>
             </form>
         </div>

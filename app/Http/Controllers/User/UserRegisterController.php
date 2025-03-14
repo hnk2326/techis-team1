@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 // データベースを扱うためUserモデルを呼び出せるようにする
 use App\Models\User;
+use Illuminate\Support\Facades\Gate;
 
 
 class UserRegisterController extends Controller
@@ -36,19 +37,23 @@ class UserRegisterController extends Controller
      */
     public function UserRegister(Request $request)
     {
+
+        if(!isset($request->role)) $request->role = 0;
+
         // バリデーションの確認
         $this->validate($request,[
             // ###### バリデーションのチェックしない動作確認用
-            'name' => 'required|string', // 必須、文字列
-            'email' => 'required|email|unique:users', // 必須、@を含むアドレス、★★メールアドレス被り禁止★★
-            'password' => 'required', // 必須
-            'role' => 'boolean', // ０か１
-            // ##### バリデーションする本番用
-            // 'name' => 'required|string|max:20', // 必須、文字列、最大文字数20文字
-            // 'email' => 'required|email|max:255|unique:users', // 必須、@を含むアドレス、最大文字数40文字、uesrsテーブルに同じメールアドレスがあったらダメ
-            // 'password' => 'required|between:8,16|confirmed', // 必須、8～12文字、パスワード確認用が同じか、ToDo:Password::rule
+            // 'name' => 'required|string', // 必須、文字列
+            // 'email' => 'required|email|unique:users', // 必須、@を含むアドレス、★★メールアドレス被り禁止★★
+            // 'password' => 'required', // 必須
             // 'role' => 'boolean', // ０か１
-            //
+
+            // ##### バリデーションする本番用
+            'name' => 'required|string|max:20', // 必須、文字列、最大文字数20文字
+            'email' => 'required|email|max:255|unique:users', // 必須、@を含むアドレス、最大文字数40文字、uesrsテーブルに同じメールアドレスがあったらダメ
+            'password' => 'required|between:8,16|confirmed', // 必須、8～12文字、パスワード確認用が同じか、ToDo:Password::rule
+            'role' => 'boolean', // ０一般か、１管理者
+
             // パスワードをもっと強力なものにするために
             // 文字・数字・大文字小文字・記号を含めさせる、passwordなどの弱いパスワードをＮＧにすることができる。
             // 余力があったら実装する。必要なら発表で言及する。たぶんしない。
@@ -62,8 +67,15 @@ class UserRegisterController extends Controller
             'role' => $request->role,
         ]);
 
-        // アカウント作成に成功したらそのままログインする、の一行
-        Auth::login($user);
+
+        // 今登録した$userでログインする。
+        // Auth::login($user);
+        //
+        // 管理者が、新しい人のアカウントを作ってあげることもできる。
+        // その時は管理者が今登録した新規アカウントにログインする必要はないのでスキップする
+        // Gate::denies('admin') admin権限の人はfalse、それ以外ならtrueを返す
+        if(Gate::denies('admin')) Auth::login($user);
+
 
         // ホーム画面に遷移する
         return redirect('home');

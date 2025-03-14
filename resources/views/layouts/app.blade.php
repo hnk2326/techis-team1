@@ -23,27 +23,24 @@
 </head>
 <body>
 
-    <!-- 画面全体のエリアブロック 中身のブロックを横並びに -->
-    <div id="app" class="allWrapper d-flex flex-nowrap ">
+    <!-- 画面全体のエリアブロック -->
+    <div id="app" class="allWrapper d-flex vh-100">
+
 
         {{-- サイドバーエリア --}}
-        {{-- @auth 必要なページだけサイドバーを表示させる ≒ ログイン後の画面 ＞保留--}}
+        @auth  {{-- サイドバーが出るのはログイン後のみなので、auth限定で表示 --}}
             @section('sidebar')
-                <div id="sidebar" class="sidebar-main
-                                h-100
-                                py-0
-                                position-fixed
-                                col-md-2
-                                ">
+                <div id="sidebar" class="sidebar-main col-md-2 ">
 
                     @include('common.side') <!-- サイドバー読み込み -->
                 </div>
             @show
-        {{-- @endauth ＞保留--}}
+        @endauth
         {{-- サイドバー おわり --}}
 
+
         <!--  メインコンテンツエリア  -->
-        <main class="py-4 offset-md-2 flex-grow-1" >
+        <main class="py-4 overflow-y-auto" style="flex:1;" >
             @yield('content')
         </main>
         <!--  ここまで メインコンテンツ  -->

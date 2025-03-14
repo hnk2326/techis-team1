@@ -35,8 +35,7 @@ use App\Http\Controllers\UserController;
 //
 // middleware('auth')： ログイン状態の人だけが見れるという認証
 // group( )：複数のルートに同じmiddlewareの認証をかけるためにまとめている。
-Route::middleware('auth')->group([], function () {
-
+Route::middleware('auth')->group(function () {
 
     // 商品一覧画面
     Route::get('/index', [App\Http\Controllers\ItemController::class, 'index']);
@@ -62,38 +61,8 @@ Route::middleware('auth')->group([], function () {
         return view('/items.home');
     });
 
-
-// ログイン中 かつ
-    // **********************************
-    // **   管理者専用のページ
-    // **********************************
-    //  管理者権限(role = 1)を持っている人だけが見れるページたち
-    //
-    //
-    // middleware('can:admin')： role= 1 の人だけが見れるというgate認証
-    Route::middleware('can:admin')->group([], function () {
-
-
-        // User
-        Route::get('/user', [UserController::class, 'index'])->name('users.index'); // ユーザー管理画面
-        Route::get('/user/{id}/edit', [UserController::class, 'edit'])->name('users.edit'); // ユーザー編集画面
-        Route::post('/user/{id}/update', [UserController::class, 'update'])->name('users.update'); // ユーザー更新
-        Route::delete('/user/{id}', [UserController::class, 'destroy'])->name('users.destroy');// ユーザー削除
-
-    });
-    // **   管理者ページここまで
-    // **********************************
-    // **********************************
-// ここからまた一般ユーザー（上のほうはitems関連にして分けてます）
-
-        // ユーザー登録画面を表示
-        Route::get('/UserRegister', [UserRegisterController::class, 'showUserRegister']);
-        // アカウント作成コントローラ呼び出し
-        Route::post('/UserRegister', [UserRegisterController::class, 'UserRegister']);
-
-        
-        // ログアウトボタンを押したらログイン認証用のコントローラーを呼び出してログアウトする
-        Route::post('/logout', [AuthController::class, 'logout']);
+    // ログアウトボタンを押したらログイン認証用のコントローラーを呼び出してログアウトする
+    Route::post('/logout', [AuthController::class, 'logout']);
 
 });
 //      ログイン中の人専用ページここまで
@@ -101,6 +70,55 @@ Route::middleware('auth')->group([], function () {
 // ####################################
 
 
+
+// **********************************
+// **   管理者専用のページ
+// **********************************
+//  管理者権限(role = 1)を持っている人だけが見れるページたち
+//
+//
+// middleware('can:admin')： role= 1 の人だけが見れるというgate認証
+Route::middleware('can:admin')->group(function () {
+
+
+    // User
+    Route::get('/user', [UserController::class, 'index'])->name('users.index'); // ユーザー管理画面
+    Route::get('/user/{id}/edit', [UserController::class, 'edit'])->name('users.edit'); // ユーザー編集画面
+    Route::post('/user/{id}/update', [UserController::class, 'update'])->name('users.update'); // ユーザー更新
+    Route::delete('/user/{id}', [UserController::class, 'destroy'])->name('users.destroy');// ユーザー削除
+
+
+});
+// **   管理者ページここまで
+// **********************************
+// **********************************
+
+
+
+
+// ####################################
+// #####  アカウント登録用のページ
+// ####################################
+//
+// アカウント登録が行われるのは
+// １，新規ユーザーがログイン画面に来た時
+// ２，管理者がサイドバーから登録しに来た時
+// の２パターンだが
+// 既存ユーザーがアカウントを追加すること自体は禁止されていないので
+// ###   「誰にもアクセス制限をしない。」
+// 厳密には何かしら認証をかけないといけないかも
+//
+//
+// Route::middleware(['auth','can:admin'])->group(function (){
+
+    // ユーザー登録画面を表示
+    Route::get('/UserRegister', [UserRegisterController::class, 'showUserRegister']);
+    // アカウント作成コントローラ呼び出し
+    Route::post('/UserRegister', [UserRegisterController::class, 'UserRegister']);
+
+// });
+//     アカウント作成用ここまで
+// ####################################
 
 
 // ####################################
@@ -111,7 +129,7 @@ Route::middleware('auth')->group([], function () {
 //
 // middleware('guest')： ログアウト状態の人だけが見れるという認証
 // group( )：複数のルートに同じmiddlewareの認証をかけるためにまとめている。
-Route::middleware('guest')->group([], function () {
+Route::middleware('guest')->group(function () {
 
     // http://127.0.0.1:8000 ＝ 「アプリのルート」はログイン画面
     Route::get('/', function () {

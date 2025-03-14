@@ -20,8 +20,8 @@
         @endif
         {{-- ここまで アカウント登録エラー --}}
 
-
-        {{-- みんなが慣れてきたら消します！！ --}}
+        {{--
+        みんなが慣れてきたら消します！！
         <p class="skip-login-cheat alert alert-warning"><b>
             <span class="bg-info">あとで必ず消します！</span> <br>
             <span class="for-error" style="display:inline-block; border:solid red; font-size:80%;">
@@ -35,7 +35,7 @@
             password: taropass <br>
             <span class="bg-info">あとで必ず消します！</span>
         </b></p>
-        {{-- ここまで　消します！！ --}}
+        ここまで　消します！！ --}}
 
 
         {{-- アカウント作成用のフォームを設置 --}}
@@ -43,25 +43,47 @@
             <form action="{{ url('UserRegister') }}" class="login-form" method="POST">
                 @csrf
 
-                <div class="user-form-label">名前</div>
-                <input type="text" name="name" class="w-100" placeholder="名前" value="たろう" autofocus>
-                <div class="user-form-label">メールアドレス</div>
-                <input type="email" name="email" class="w-100" placeholder="メールアドレス" value="taro@example.com">
-                <div class="user-form-label">パスワード</div>
-                <input type="password" name="password" class="w-100" placeholder="パスワード" value="taropass">
-                <div class="user-form-label">パスワード（確認）</div>
-                <input type="password" name="password" class="w-100" placeholder="パスワード（確認）" value="taropass">
+                {{-- 名前：name --}}
+                <div class="mb-4">
+                    <label for="name" class="form-label">名前</label>
+                    <input id="name" type="text" name="name" class="w-100 border-secondary form-control" placeholder="" value="{{ old('name') }}" autofocus>
+                </div>
 
-                <input type="hidden" name="role" value="0" >
-                <label for="apply-role" class="role-label p-2">
-                    <input type="checkbox" name="role" id="apply-role" value="1" class="chk">
-                    管理者
-                </label>
+                {{-- メールアドレス：mail --}}
+                <div class="mb-4">
+                    <label for="email" class="form-label">メールアドレス</label>
+                    <input id="email" type="email" name="email" class="w-100 border-secondary form-control" placeholder="" value="{{ old('email') }}">
+                </div>
 
-                <div class="login-btn-wrapper py-2 d-flex justify-content-evenly">
-                    <button type="submit" class="login-btn btn btn-secondary px-2 w-25">アカウント登録</button>
-                    <a href="{{ url('login') }}" class="py-1">キャンセル</a>
+                {{-- パスワード：password，password_confirmation --}}
+                <div class="mb-4">
+                    <label for="password" class="form-label">パスワード</label>
+                    <span class="small text-secondary ms-3">※８文字～１６文字</span>
+                    <input id="password" type="password" name="password" class="w-100 border-secondary form-control" placeholder="" value="">
+                </div>
+                <div class="mb-4">
+                    <label for="password-conf">パスワード（確認）</label>
+                    <input id="password-conf" type="password" name="password_confirmation" class="w-100 border-secondary form-control" placeholder="" value="">
+                </div>
+
+                {{-- 管理者権限付与：role --}}
+                {{-- 管理者でログインしている人にだけ表示されるブロック --}}
+                @can('admin')
+                    {{-- チェックボックスがオフだと、コントローラーに値が送られないので、ここで一度先に、roleの値を初期化：role = 0 --}}
+                    <input id="" type="hidden" name="role" value="0" >
+                    <label for="apply-role" class="role-label p-2 form-label">
+                        <input id="apply-role" type="checkbox" name="role" value="1" class="chk">
+                        管理者
+                    </label>
+                @endcan
+                {{-- 管理者専用 ここまで --}}
+
+                {{-- ボタンたち --}}
+                <div class="login-btn-wrapper py-2 d-grid d-md-flex justify-content-md-center">
+                    <button type="submit" class="login-btn btn btn-primary w-100 m-2 mx-lg-3">アカウント登録</button>
+                    <a href="{{ url('login') }}" class="d-block text-center w-100 m-2 mx-lg-3">キャンセル</a>
                 </div>
             </form>
+            
         </div>
 @endsection

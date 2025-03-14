@@ -16,6 +16,16 @@
             <input type="email" name="email" class="form-control" value="{{ old('email', $user->email) }}" required>
         </div>
 
+        <div class="mb-3">
+            <label class="form-label">パスワード</label>
+            <input type="password" name="password" class="form-control">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">パスワード確認</label>
+            <input type="password" name="password_confirmation" class="form-control">
+        </div>
+
         
         <button type="submit" class="btn btn-success">更新</button>
         <a href="{{ route('users.index') }}" class="btn btn-secondary">キャンセル</a>

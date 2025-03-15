@@ -27,13 +27,16 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:users,email,' . $id,
+            'password' => 'required|min:8|confirmed', // password は任意入力
         ]);
 
         $user = User::findOrFail($id);
         $user->update([
             'name' => $request->name,
             'email' => $request->email,
+            'password' =>$request->password,
         ]);
+        
 
         return redirect()->route('users.index')->with('success', 'ユーザー情報を更新しました。');
     }

@@ -51,11 +51,11 @@ class UserRegisterController extends Controller
             // ##### バリデーションする本番用
             'name' => 'required|string|max:20', // 必須、文字列、最大文字数20文字
             'email' => 'required|email|max:255|unique:users', // 必須、@を含むアドレス、最大文字数40文字、uesrsテーブルに同じメールアドレスがあったらダメ
-            'password' => 'required|between:8,16|confirmed', // 必須、8～12文字、パスワード確認用が同じか、ToDo:Password::rule
+            'password' => 'required|string|between:8,16|confirmed', // 必須、文字列(数字も可)、8～12文字、パスワード確認用が同じか、ToDo:Password::rule
             'role' => 'boolean', // ０一般か、１管理者
 
             // パスワードをもっと強力なものにするために
-            // 文字・数字・大文字小文字・記号を含めさせる、passwordなどの弱いパスワードをＮＧにすることができる。
+            // 文字・数字・大文字小文字・記号を「含めさせる」passwordなどの弱いパスワードをＮＧにすることもできる。
             // 余力があったら実装する。必要なら発表で言及する。たぶんしない。
         ]);
 

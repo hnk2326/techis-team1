@@ -27,7 +27,7 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:users,email,' . $id,
-            'password' => 'required|min:8|confirmed', // password は任意入力
+            'password' => 'required|min:8|confirmed', // password 
         ]);
 
         $user = User::findOrFail($id);

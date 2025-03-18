@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Item;
 
 class ItemController extends Controller
@@ -72,9 +73,18 @@ class ItemController extends Controller
 
     public function itemCreate(Request $request)
     {
+        // バリデーション
+        $request->validate([
+            'date' => 'required|date',
+            'item_name' => 'required|string|max:255',
+            'category_id' => ['required', new Enum(Category::class)],
+            'price' => 'nullable|numeric|min:0', 
+            'detail' => 'nullable|string|max:1000', 
+        ]); 
+
         // 新しい商品を登録
         $item = new Item();
-        $item->user_id = 1;
+        $item->user_id = Auth::id();
         $item->date = $request->date;
         $item->item_name = $request->item_name;
         $item->category_id = $request->category_id;
@@ -98,12 +108,21 @@ class ItemController extends Controller
         ]);
     }
 
-    public function ItemEdit(Request $request, $id){
+    public function ItemEdit(Request $request, $id)
+    {
+        // バリデーション
+        $request->validate([
+            'date' => 'required|date',
+            'item_name' => 'required|string|max:255',
+            'category_id' => ['required', new Enum(Category::class)],
+            'price' => 'nullable|numeric|min:0', 
+            'detail' => 'nullable|string|max:1000', 
+        ]);
 
         // 既存の商品情報を取得して、編集内容を保存し一覧画面に戻る
         $item = Item::find($id);
 
-        $item->user_id = 1;
+        $item->user_id = Auth::id();
         $item->date = $request->date;
         $item->item_name = $request->item_name;
         $item->category_id = $request->category_id;

@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Item;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
 class ItemSeeder extends Seeder
@@ -17,6 +18,12 @@ class ItemSeeder extends Seeder
         // IDをリセットしてからダミーデータを作成
         DB::table('items')->truncate(); 
 
-        Item::factory()->count(50)->create(); // 50件のダミーデータを作成
+        // array_rand($userIds) で ランダムな id を選択users 
+        // User::pluck('id')->toArray() で すべての id を配列で取得
+
+        $userIds = User::pluck('id')->toArray(); // users テーブルの全 ID を取得
+        Item::factory()->count(10)->state(fn () => [
+            'user_id' => $userIds[array_rand($userIds)] ?? 1,
+        ])->create();
     }
 }

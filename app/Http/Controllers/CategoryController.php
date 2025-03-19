@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate; 
+use Illuminate\Support\Facades\Gate;
 use illuminate\Validation\Rules\Category;
 
 class CategoryController extends Controller
@@ -24,9 +24,9 @@ class CategoryController extends Controller
             // カテゴリが選択されている場合の検索
             $query->where('category_id', $categoryId);
             if (Gate::allows('admin')) {
-                dump(Gate::allows('admin'));
+                // dump(Gate::allows('admin'));
                 //  ～  管理者のみに実行して欲しい部分～
-    
+
                 // 管理者ならすべての商品を取得
                 $items = $query->orderBy('date', 'desc')->get();
                 $totalPrice = $query->sum('price');
@@ -37,9 +37,9 @@ class CategoryController extends Controller
             }
         } else {
             if (Gate::allows('admin')) {
-                dump(Gate::allows('admin'));
+                // dump(Gate::allows('admin'));
                 //  ～  管理者のみに実行して欲しい部分～
-    
+
                 // 管理者ならすべての商品を取得
                 $items = $query->orderBy('date', 'desc')->get();
                 $totalPrice = $query->sum('price');

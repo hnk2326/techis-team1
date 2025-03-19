@@ -22,8 +22,9 @@ class ItemSeeder extends Seeder
         // User::pluck('id')->toArray() で すべての id を配列で取得
 
         $userIds = User::pluck('id')->toArray(); // users テーブルの全 ID を取得
-        Item::factory()->count(10)->state(fn () => [
+        Item::factory()->count(20)->state(fn () => [    // ダミーデータの件数を指定して作成
             'user_id' => $userIds[array_rand($userIds)] ?? 1,
         ])->create();
+        
     }
 }

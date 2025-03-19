@@ -29,7 +29,7 @@
                 <label for="category_id" class="form-label">カテゴリ</label></br>
                 <select name="category_id" id="category_id" class="w-75 border-secondary form-select">
                     
-                    @foreach (App\Enums\Category::options() as $value => $label)
+                    @foreach (App\Enums\Categories::options() as $value => $label)
                         <option value="{{ $value }}" >{{ $label }}</option>
                     @endforeach
                 </select>

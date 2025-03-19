@@ -30,7 +30,7 @@
                 <select name="category_id" id="category_id" class="form-select" required>
                     <option value="" disabled selected></option>
                     <!-- 日本語でカテゴリの名前が入るように追加しました。 Enumを使う方法です（Laravel９以上なら標準機能として使えます。）-->
-                    @foreach (App\Enums\Category::options() as $value => $label)
+                    @foreach (App\Enums\Categories::options() as $value => $label)
                         <option value="{{ $value }}" >{{ $label }}</option>
                     @endforeach
                 </select>

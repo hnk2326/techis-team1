@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate; 
 use App\Models\Item;
 use App\Models\User;
 use illuminate\Validation\Rules\Category;
@@ -30,26 +31,33 @@ class ItemController extends Controller
         $query->where('item_name', 'like', '%' .$search. '%');
         $totalPrice = Item::where('item_name', 'like', '%' .$search. '%')
             ->sum('price');
-        if (auth()->user()->is_admin) {
+        if (Gate::allows('admin')) {
+            dump(Gate::allows('admin'));
+            //  ～  管理者のみに実行して欲しい部分～
+
             // 管理者ならすべての商品を取得
-            $items = $query->orderBy('date')->paginate(10)->withQueryString();
+            $items = $query->orderBy('date', 'desc')->get();
             $totalPrice = $items->sum('price');
         } else {
             // 一般ユーザーは自分が登録した商品のみ取得
-            $items = $query->where('user_id', Auth::id())->orderBy('date')->paginate(10)->withQueryString();
+            $items = $query->where('user_id', Auth::id())->orderBy('date', 'desc')->get();
             $totalPrice = $items->sum('price');
         }
     } else {     // 未入力の場合
         $message = "検索キーワードを入力してください。";
         // 未入力なら、全データ表示
         
-        if (auth()->user()->is_admin) {
+        if (Gate::allows('admin')) {
+            dump(Gate::allows('admin'));
+            //  ～  管理者のみに実行して欲しい部分～
+
             // 管理者ならすべての商品を取得
             $items = Item::all();
+            $query->orderBy('date', 'desc')->get();
             $totalPrice = Item::all()->sum('price');
         } else {
             // 一般ユーザーは自分が登録した商品のみ取得
-            $items = $query->where('user_id', auth()->id())->orderBy('date')->paginate(10)->withQueryString();
+            $items = $query->where('user_id', Auth::id())->orderBy('date', 'desc')->get();
             $totalPrice = $items->sum('price');
         }
     }
@@ -117,7 +125,7 @@ class ItemController extends Controller
     {
         // 一覧画面で指定されたIDの情報を取得
         $item = Item::findOrFail($id);
-        $category = Category::all();
+
         return view('items.edit')->with([
             'item' => $item,
         ]);

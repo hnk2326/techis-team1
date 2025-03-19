@@ -31,7 +31,7 @@
                     {{ csrf_field() }}          <!-- CSRFトークン -->
                         <select name="category" class="form-select-success form-select-sm mb-3" aria-label=".form-select-sm example" required>
                             <option value="" disabled selected>カテゴリ検索</option>
-                            @foreach (App\Enums\Category::options() as $value => $label)
+                            @foreach (App\Enums\Categories::options() as $value => $label)
                             <option value="{{ $value }}" >{{ $label }}</option>
                             @endforeach
                         </select>
@@ -56,7 +56,7 @@
                                 <tbody>
                                 @foreach ($items as $item)
                                     <tr>
-                                        <td>{{ \App\Enums\Category::tryFrom($item->category_id)?->label() }}</td>
+                                        <td>{{ \App\Enums\Categories::tryFrom($item->category_id)?->label() }}</td>
                                         <td>{{ $item->id }}</td>
                                         <td>{{ $item->user_id }}</td>
                                         <td>{{ $item->date }}</td>

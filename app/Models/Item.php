@@ -30,5 +30,4 @@ class Item extends Model
     public function category() : Relation {
         return $this->belongsTo(Category::class);
     }  
-    
 }

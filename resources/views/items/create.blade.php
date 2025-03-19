@@ -27,12 +27,12 @@
 
             <div class="mb-3">
                 <label for="category_id" class="form-label">カテゴリ</label></br>
-                <select name="category_id" id="category_id" class="w-75 border-secondary form-select">
-                    <option value=""></option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
+                <select name="category_id" id="category_id" class="form-select" required>
+                    <option value="" disabled selected></option>
+                    <!-- 日本語でカテゴリの名前が入るように追加しました。 Enumを使う方法です（Laravel９以上なら標準機能として使えます。）-->
+                    @foreach (App\Enums\Categories::options() as $value => $label)
+                        <option value="{{ $value }}" >{{ $label }}</option>
+                    @endforeach
                 </select>
                 @error('category_id')
                     <div class="text-danger">{{ $message }}</div>

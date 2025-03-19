@@ -23,52 +23,58 @@ class ItemFactory extends Factory
     {
         // item_nameのリスト
         $items = [
-             ['name' => 'アイロン', 'category_id' => 3, 'detail' => 'しわをきれいに伸ばせるアイロン'],
-             ['name' => 'インスタントラーメン', 'category_id' => 1, 'detail' => '手軽に作れる美味しいラーメン'],
-             ['name' => 'お好み焼き粉', 'category_id' => 1, 'detail' => '手軽に美味しいお好み焼きが作れる粉'],
-             ['name' => 'お茶', 'category_id' => 1, 'detail' => '上品な香りの緑茶'],
-             ['name' => 'クッキー', 'category_id' => 1, 'detail' => 'バター風味でサクサクのクッキー'],
-             ['name' => 'コーヒー豆', 'category_id' => 1, 'detail' => '香り高いコーヒー豆'],
-             ['name' => 'ジャガイモ', 'category_id' => 1, 'detail' => '国産'],
-             ['name' => 'ジュース', 'category_id' => 1, 'detail' => '果汁100%のジュース'],
-             ['name' => 'ジュース', 'category_id' => 1, 'detail' => 'フレッシュな果汁100%のジュース'],
-             ['name' => 'ソース', 'category_id' => 1, 'detail' => '濃い味わいで料理にぴったりなソース'],
-             ['name' => 'チーズ', 'category_id' => 1, 'detail' => 'まろやかで濃厚なチーズ'],
-             ['name' => 'チョコレート', 'category_id' => 1, 'detail' => '甘くて濃厚なチョコレート'],
-             ['name' => 'ティッシュ', 'category_id' => 2, 'detail' => 'しっかりとした使い心地'],
-             ['name' => 'トイレットペーパー', 'category_id' => 2, 'detail' => '経済的で長持ちするトイレットペーパー'],
-             ['name' => 'ハム', 'category_id' => 1, 'detail' => '贅沢な味わいのスライスハム'],
-             ['name' => 'パン', 'category_id' => 1, 'detail' => '焼きたてのふわふわパン'],
-             ['name' => 'ビスケット', 'category_id' => 1, 'detail' => 'サクサクとした食感のビスケット'],
-             ['name' => 'フライパン', 'category_id' => 3, 'detail' =>  '軽量で使いやすいフライパン'],
-             ['name' => 'フランスパン', 'category_id' => 1, 'detail' => '焼きたてのフランスパン'],
-             ['name' => 'ポット', 'category_id' => 3, 'detail' =>  '温かい飲み物を長時間保温'],
-             ['name' => 'マスク', 'category_id' => 2, 'detail' => '快適に使える高性能マスク'],
-             ['name' => 'まな板', 'category_id' => 3, 'detail' =>  '抗菌加工が施されたまな板'],
-             ['name' => 'マヨネーズ', 'category_id' => 1, 'detail' => '濃厚でクリーミーなマヨネーズ'],
-             ['name' => 'ミキサー', 'category_id' => 3, 'detail' =>  'スムージー作りに便利なミキサー'],
-             ['name' => 'ヨーグルト', 'category_id' => 1, 'detail' => '乳酸菌たっぷりのヨーグルト'],
-             ['name' => '果物', 'category_id' => 1, 'detail' => '旬のフルーツ'],
-             ['name' => '歯ブラシ', 'category_id' => 2,'detail' => '磨きやすいデザインで歯に優しい'],
-             ['name' => '除湿機', 'category_id' => 4, 'detail' =>  '湿気を取る優れた除湿機'],
-             ['name' => '洗剤', 'category_id' => 2, 'detail' => '洗浄力が強く、環境にも優しい'],
-             ['name' => '電気ケトル', 'category_id' => 3, 'detail' =>  '1リットルの容量で短時間でお湯が沸く'],
-             ['name' => '豆腐', 'category_id' => 1, 'detail' => '栄養満点な国産豆腐'],
-             ['name' => '肉', 'category_id' => 1, 'detail' => '国産＆輸入品'],
-             ['name' => '肉', 'category_id' => 1, 'detail' => '国産'],
-             ['name' => '納豆', 'category_id' => 1, 'detail' => '	健康に良い納豆'],
-             ['name' => '米' , 'category_id' => 1, 'detail' => '高品質な国内産のお米'],
-             ['name' => '米', 'category_id' => 1, 'detail' => '国内産のお米'],
-             ['name' => '野菜', 'category_id' => 1, 'detail' => '有機野菜'],
-             ['name' => '野菜', 'category_id' => 1, 'detail' => '国産野菜']
+             ['item_name' => 'アイロン','detail' => 'しわをきれいに伸ばせるアイロン'],
+             ['item_name' => 'インスタントラーメン', 'detail' => '手軽に作れる美味しいラーメン'],
+             ['item_name' => 'お好み焼き粉', 'detail' => '手軽に美味しいお好み焼きが作れる粉'],
+             ['item_name' => 'お茶', 'detail' => '上品な香りの緑茶'],
+             ['item_name' => 'クッキー', 'detail' => 'バター風味でサクサクのクッキー'],
+             ['item_name' => 'コーヒー豆', 'detail' => '香り高いコーヒー豆'],
+             ['item_name' => 'ジャガイモ', 'detail' => '国産'],
+             ['item_name' => 'ジュース', 'detail' => '果汁100%のジュース'],
+             ['item_name' => 'ジュース', 'detail' => 'フレッシュな果汁100%のジュース'],
+             ['item_name' => 'ソース', 'detail' => '濃い味わいで料理にぴったりなソース'],
+             ['item_name' => 'チーズ', 'detail' => 'まろやかで濃厚なチーズ'],
+             ['item_name' => 'チョコレート', 'detail' => '甘くて濃厚なチョコレート'],
+             ['item_name' => 'ティッシュ', 'detail' => 'しっかりとした使い心地'],
+             ['item_name' => 'トイレットペーパー', 'detail' => '経済的で長持ちするトイレットペーパー'],
+             ['item_name' => 'ハム', 'detail' => '贅沢な味わいのスライスハム'],
+             ['item_name' => 'パン',  'detail' => '焼きたてのふわふわパン'],
+             ['item_name' => 'ビスケット', 'detail' => 'サクサクとした食感のビスケット'],
+             ['item_name' => 'フライパン', 'detail' =>  '軽量で使いやすいフライパン'],
+             ['item_name' => 'フランスパン', 'detail' => '焼きたてのフランスパン'],
+             ['item_name' => 'ポット', 'detail' =>  '温かい飲み物を長時間保温'],
+             ['item_name' => 'マスク', 'detail' => '快適に使える高性能マスク'],
+             ['item_name' => 'まな板', 'detail' =>  '抗菌加工が施されたまな板'],
+             ['item_name' => 'マヨネーズ', 'detail' => '濃厚でクリーミーなマヨネーズ'],
+             ['item_name' => 'ミキサー', 'detail' =>  'スムージー作りに便利なミキサー'],
+             ['item_name' => 'ヨーグルト', 'detail' => '乳酸菌たっぷりのヨーグルト'],
+             ['item_name' => '果物', 'detail' => '旬のフルーツ'],
+             ['item_name' => '歯ブラシ', 'detail' => '磨きやすいデザインで歯に優しい'],
+             ['item_name' => '除湿機', 'detail' =>  '湿気を取る優れた除湿機'],
+             ['item_name' => '洗剤', 'detail' => '洗浄力が強く、環境にも優しい'],
+             ['item_name' => '電気ケトル', 'detail' =>  '1リットルの容量で短時間でお湯が沸く'],
+             ['item_name' => '豆腐', 'detail' => '栄養満点な国産豆腐'],
+             ['item_name' => '肉', 'detail' => '国産＆輸入品'],
+             ['item_name' => '肉', 'detail' => '国産'],
+             ['item_name' => '納豆', 'detail' => '健康に良い納豆'],
+             ['item_name' => '米' , 'detail' => '高品質な国内産のお米'],
+             ['item_name' => '米', 'detail' => '国内産のお米'],
+             ['item_name' => '野菜',  'detail' => '有機野菜'],
+             ['item_name' => '野菜', 'detail' => '国産野菜']
         ];
 
         // item_name をランダムに選ぶ
         $item = $this->faker->randomElement($items);
+        // optionalでNULLにならず、デフォルトの１が入る方法（optional(User::inRandomOrder()->first())->id ?? 1,）
+        // ユーザーが１人もいないときに（User::exists() ? User::inRandomOrder()->first()->id : 1）
+        // User::inRandomOrder()->value('id') ?? 1, // `value('id')` で `id` だけ取得
+        
+        // 今回使用
+        // テーブルが空なら 1 をセット（!empty($userIds) ? ... : 1）         
 
         return [
             'category_id' => $item['category_id'],
-            'user_id' => User::inRandomOrder()->first()->id ?? 1,  // 'user_id' => 1, // 必要ならランダムなユーザーIDに変更
+            'user_id' => User::exists() ? User::inRandomOrder()->first()->id : 1,
             'date' => Carbon::now()->subDays(rand(1, 30)), // 過去30日間のランダムな日付
             'item_name' => $item['name'],
             'price' => $this->faker->numberBetween(100, 10000),

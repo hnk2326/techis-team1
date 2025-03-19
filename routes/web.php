@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\User\UserRegisterController;
 use App\Http\Controllers\UserController;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -37,15 +38,22 @@ use App\Http\Controllers\UserController;
 // group( )：複数のルートに同じmiddlewareの認証をかけるためにまとめている。
 Route::middleware('auth')->group(function () {
 
-    // 商品一覧画面
-    Route::get('/index', [App\Http\Controllers\ItemController::class, 'index']);
+// 商品一覧画面
+Route::get('/index', [App\Http\Controllers\ItemController::class, 'index'])->name('items.index');
 
-    Route::get('/category', [App\Http\Controllers\CategoryController::class, 'index']);
-    // 商品を１件削除
-    Route::post('/itemDestroy/{id}', [App\Http\Controllers\ItemController::class, 'destroy']);
+Route::get('/category', [App\Http\Controllers\CategoryController::class, 'index']);
+// 商品を１件削除
+Route::delete('/itemDestroy/{id}', [App\Http\Controllers\ItemController::class, 'destroy']);
 
-    // ？       動作は上の '/index'と全く同じ
-    Route::get('/items', [App\Http\Controllers\ItemController::class, 'index']); // もう使ってないルート？（月森）
+Route::get('/category', [App\Http\Controllers\CategoryController::class, 'index']);
+
+
+// Route::get('/', [App\Http\Controllers\ItemController::class, 'index']);
+// http://127.0.0.1:8000 から表示される画面をログイン画面にする
+Route::get('/', function () {
+    return view('/auth.login');
+});
+Route::get('/items', [App\Http\Controllers\ItemController::class, 'index']);
 
     // 商品登録
     Route::get('/create', [App\Http\Controllers\ItemController::class, 'create']);
@@ -55,6 +63,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/edit/{id}', [App\Http\Controllers\ItemController::class, 'edit']);
     Route::post('/itemEdit/{id}', [App\Http\Controllers\ItemController::class, 'itemEdit']);
 
+    Route::get('/cancel', [App\Http\Controllers\ItemController::class, 'index'])->name('cancel');
 
     // 動作確認用の仮のホーム画面のルーティング
     Route::get('/home', function() {

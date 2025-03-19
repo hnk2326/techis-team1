@@ -4,12 +4,19 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate; 
 use App\Models\Item;
+use App\Models\User;
+use illuminate\Validation\Rules\Category;
+use Illuminate\Validation\Rules\Enum;
+use App\Enums\Categories;
 
 class ItemController extends Controller
 {
     /**
      * Display a listing of the resource.
+     * @param Request $request
+     * @return Response
      */
     public function index(Request $request)
     {
@@ -21,31 +28,41 @@ class ItemController extends Controller
     
     if ($request->filled('search')) {
         $message = '検索結果: ' .$search;
-        $items = Item::all();
-        $query->where('item_name', 'like', '%' .$search. '%') // 
-            ->orWhere('id', 'like', '%' .$search. '%')
-            ->orWhere('user_id', 'like', '%' .$search. '%')
-            ->orWhere('date', 'like', '%' .$search. '%')
-            ->orWhere('price', 'like', '%' .$search. '%')
-            ->orWhere('detail', 'like', '%' .$search. '%');
-        $totalPrice = Item::where('item_name', 'like', '%' .$search. '%') // 
-            ->orWhere('id', 'like', '%' .$search. '%')
-            ->orWhere('user_id', 'like', '%' .$search. '%')
-            ->orWhere('date', 'like', '%' .$search. '%')
-            ->orWhere('price', 'like', '%' .$search. '%')
-            ->orWhere('detail', 'like', '%' .$search. '%')
+        $query->where('item_name', 'like', '%' .$search. '%');
+        $totalPrice = Item::where('item_name', 'like', '%' .$search. '%')
             ->sum('price');
-        } else {     // 未入力の場合
-            $message = "検索キーワードを入力してください。";
-            // 未入力なら、全データ表示
-            $items = Item::all();
-            $totalPrice = Item::all()->sum('price');
+        if (Gate::allows('admin')) {
+            dump(Gate::allows('admin'));
+            //  ～  管理者のみに実行して欲しい部分～
+
+            // 管理者ならすべての商品を取得
+            $items = $query->orderBy('date', 'desc')->get();
+            $totalPrice = $items->sum('price');
+        } else {
+            // 一般ユーザーは自分が登録した商品のみ取得
+            $items = $query->where('user_id', Auth::id())->orderBy('date', 'desc')->get();
+            $totalPrice = $items->sum('price');
         }
-          // 変数を一つ受け渡す場合はcompact関数又はwithメソッドで送信。
+    } else {     // 未入力の場合
+        $message = "検索キーワードを入力してください。";
+        // 未入力なら、全データ表示
+        
+        if (Gate::allows('admin')) {
+            dump(Gate::allows('admin'));
+            //  ～  管理者のみに実行して欲しい部分～
 
-          $items = $query->orderBy('date')->paginate(10)->withQueryString();
-
-          // compactの方が可読性が高いのでそちらを使うことが多い。
+            // 管理者ならすべての商品を取得
+            $items = Item::all();
+            $query->orderBy('date', 'desc')->get();
+            $totalPrice = Item::all()->sum('price');
+        } else {
+            // 一般ユーザーは自分が登録した商品のみ取得
+            $items = $query->where('user_id', Auth::id())->orderBy('date', 'desc')->get();
+            $totalPrice = $items->sum('price');
+        }
+    }
+        // 変数を一つ受け渡す場合はcompact関数又はwithメソッドで送信。
+        // compactの方が可読性が高いのでそちらを使うことが多い。
         return view('items.index', compact('search', 'query', 'message', 'items', 'totalPrice'));
         // view側では通常の変数名で展開可能  {{ $message }}    
 
@@ -56,10 +73,16 @@ class ItemController extends Controller
      */
     public function destroy(string $id)
     {
-        $item = Item::find($id);
+        $item = Item::findOrFail($id);
         $item->delete();
         
-        return redirect('/index');
+        return redirect()->route('items.index')->with('success', '商品を削除しました。');
+    }
+
+    public function cancel()
+    {
+        session()->forget('message'); // フラッシュメッセージを削除
+        return redirect()->route('index'); // 戻るページを指定（例: 'index' にリダイレクト）
     }
 
     /**
@@ -77,7 +100,7 @@ class ItemController extends Controller
         $request->validate([
             'date' => 'required|date',
             'item_name' => 'required|string|max:255',
-            'category_id' => ['required', new Enum(Category::class)],
+            'category_id' => ['required', new Enum(Categories::class)],
             'price' => 'nullable|numeric|min:0', 
             'detail' => 'nullable|string|max:1000', 
         ]); 
@@ -101,7 +124,7 @@ class ItemController extends Controller
     public function edit(Request $request, $id)
     {
         // 一覧画面で指定されたIDの情報を取得
-        $item = Item::find($id);
+        $item = Item::findOrFail($id);
 
         return view('items.edit')->with([
             'item' => $item,
@@ -114,13 +137,13 @@ class ItemController extends Controller
         $request->validate([
             'date' => 'required|date',
             'item_name' => 'required|string|max:255',
-            'category_id' => ['required', new Enum(Category::class)],
+            'category_id' => ['required', new Enum(Categories::class)],
             'price' => 'nullable|numeric|min:0', 
             'detail' => 'nullable|string|max:1000', 
         ]);
 
         // 既存の商品情報を取得して、編集内容を保存し一覧画面に戻る
-        $item = Item::find($id);
+        $item = Item::findOrFail($id);
 
         $item->user_id = Auth::id();
         $item->date = $request->date;
@@ -130,6 +153,6 @@ class ItemController extends Controller
         $item->detail = $request->detail;
         $item->save();
 
-        return redirect('/index');
+        return redirect()->route('items.index')->with('success', '商品情報を更新しました。');
     }
 }

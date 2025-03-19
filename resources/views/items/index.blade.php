@@ -5,7 +5,11 @@
 
 <!-- 商品情報一覧 -->
     <h5>商品一覧</h5>
+    @if(session('success'))
+        <div class="alert alert-emphasis bg-success-subtle p-1">{{ session('success') }}</div>
+    @endif
     <div class="items">
+    <!-- 編集されたら”編集されました。”のメッセージを出す　　　まだ表示されない！！！！ -->
         <div class="p-0">
             <div class="text-end">
                 <a href="create" class="btn btn-primary-emphasis bg-primary-subtle">商品新規登録</a>
@@ -25,12 +29,11 @@
                     <!-- セレクトボックスを設置 --> 
                     <form action="category" method="GET">
                     {{ csrf_field() }}          <!-- CSRFトークン -->
-                        <select class="form-select-success form-select-sm mb-3" aria-label=".form-select-sm example" name="category">
-                            <option selected>カテゴリ検索</option>
-                            <option value="1" >1</option>
-                            <option value="2" >2</option>
-                            <option value="3" >3</option>
-                            <option value="4" >4</option>
+                        <select name="category" class="form-select-success form-select-sm mb-3" aria-label=".form-select-sm example" required>
+                            <option value="" disabled selected>カテゴリ検索</option>
+                            @foreach (App\Enums\Categories::options() as $value => $label)
+                            <option value="{{ $value }}" >{{ $label }}</option>
+                            @endforeach
                         </select>
                         <button type="submit" class="btn btn-outline-secondary" style="padding: 2px 10px;">検索</button>
                     </form>
@@ -53,7 +56,7 @@
                                 <tbody>
                                 @foreach ($items as $item)
                                     <tr>
-                                        <td>{{ $item->category_id }}</td>
+                                        <td>{{ \App\Enums\Categories::tryFrom($item->category_id)?->label() }}</td>
                                         <td>{{ $item->id }}</td>
                                         <td>{{ $item->user_id }}</td>
                                         <td>{{ $item->date }}</td>
@@ -67,7 +70,7 @@
                                                 <a href="edit/{{$item->id}}" class="btn btn-success-emphasis bg-success-subtle" style="padding: 2px 16px;">編集</a>
                                                 <form method="POST" action="itemDestroy/{{$item->id}}" style="display:inline;">
                                                     @csrf
-                                                    @method('POST')
+                                                    @method('DELETE')
                                                     <input type="submit" value="削除" class="btn btn-danger-emphasis bg-danger-subtle" style="padding: 2px 16px;" onclick="return confirm('削除しますか？')">
                                                 </form>
                                             </div>
@@ -81,15 +84,10 @@
                 </div>    
 
             </form>
-            <div class="d-flex justify-content-between">
-                <div class="">        
-                <!-- ページネーションリンクを表示 -->
-                {{ $items->links('pagination::item') }}
-                </div>
-                <div class="">
-                    <p>合計：{{ number_format($totalPrice) }}円</p>
-                </div>
-            </div>
+
+            <p class="text-end">合計：{{ number_format($totalPrice) }}円</p>
+
+        </div>
     </div>
 </div>
 @endsection

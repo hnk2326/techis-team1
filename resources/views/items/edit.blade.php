@@ -28,11 +28,10 @@
             <div class="mb-3">
                 <label for="category_id" class="form-label">カテゴリ</label></br>
                 <select name="category_id" id="category_id" class="w-75 border-secondary form-select">
-                    <option value=""></option>
-                    <option value="1" {{ old('category_id', $item->category_id) == 1 ? 'selected' : '' }}>1</option>
-                    <option value="2" {{ old('category_id', $item->category_id) == 2 ? 'selected' : '' }}>2</option>
-                    <option value="3" {{ old('category_id', $item->category_id) == 3 ? 'selected' : '' }}>3</option>
-                    <option value="4" {{ old('category_id', $item->category_id) == 4 ? 'selected' : '' }}>4</option>
+                    
+                    @foreach (App\Enums\Categories::options() as $value => $label)
+                        <option value="{{ $value }}" >{{ $label }}</option>
+                    @endforeach
                 </select>
                 @error('category_id')
                     <div class="text-danger">{{ $message }}</div>
@@ -58,7 +57,7 @@
             <!-- 編集ボタンとキャンセルボタン -->
             <div class="d-grid gap-5 d-md-flex"></br>
                 <button type="submit" class="btn btn-primary w-25">編集</button>
-                <button type="submit" class="btn btn-outline-dark w-25">キャンセル</button> 
+                <a href="{{ route('cancel') }}" onclick="sessionStorage.removeItem('laravel_session');" class="btn btn-outline-dark w-25">キャンセル</a>
             </div>
         </form>
 

@@ -6,9 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Item;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;  // 登録ユーザーの情報のみ表示の実装のとき追加
-use illuminate\Validation\Rules\Enum;
-use App\Enums\CategoryEnum;
+use illuminate\Validation\Rules\Category;
+use Illuminate\Validation\Rules\Enum;
+use App\Enums\Categories;
 
 class ItemController extends Controller
 {
@@ -27,29 +27,34 @@ class ItemController extends Controller
     
     if ($request->filled('search')) {
         $message = '検索結果: ' .$search;
-        $query->where('item_name', 'like', '%' .$search. '%') // 
-            ->orWhere('id', 'like', '%' .$search. '%')
-            ->orWhere('user_id', 'like', '%' .$search. '%')
-            ->orWhere('date', 'like', '%' .$search. '%')
-            ->orWhere('price', 'like', '%' .$search. '%')
-            ->orWhere('detail', 'like', '%' .$search. '%');
-        $totalPrice = Item::where('item_name', 'like', '%' .$search. '%') // 
-            ->orWhere('id', 'like', '%' .$search. '%')
-            ->orWhere('user_id', 'like', '%' .$search. '%')
-            ->orWhere('date', 'like', '%' .$search. '%')
-            ->orWhere('price', 'like', '%' .$search. '%')
-            ->orWhere('detail', 'like', '%' .$search. '%')
+        $query->where('item_name', 'like', '%' .$search. '%');
+        $totalPrice = Item::where('item_name', 'like', '%' .$search. '%')
             ->sum('price');
-        } else {     // 未入力の場合
-            $message = "検索キーワードを入力してください。";
-            // 未入力なら、全データ表示
-            $totalPrice = Item::all()->sum('price');
+        if (auth()->user()->is_admin) {
+            // 管理者ならすべての商品を取得
+            $items = $query->orderBy('date')->paginate(10)->withQueryString();
+            $totalPrice = $items->sum('price');
+        } else {
+            // 一般ユーザーは自分が登録した商品のみ取得
+            $items = $query->where('user_id', Auth::id())->orderBy('date')->paginate(10)->withQueryString();
+            $totalPrice = $items->sum('price');
         }
-          // 変数を一つ受け渡す場合はcompact関数又はwithメソッドで送信。
-
-          $items = $query->where('user_id', Auth::id())->orderBy('date')->paginate(10)->withQueryString();
-
-          // compactの方が可読性が高いのでそちらを使うことが多い。
+    } else {     // 未入力の場合
+        $message = "検索キーワードを入力してください。";
+        // 未入力なら、全データ表示
+        
+        if (auth()->user()->is_admin) {
+            // 管理者ならすべての商品を取得
+            $items = Item::all();
+            $totalPrice = Item::all()->sum('price');
+        } else {
+            // 一般ユーザーは自分が登録した商品のみ取得
+            $items = $query->where('user_id', auth()->id())->orderBy('date')->paginate(10)->withQueryString();
+            $totalPrice = $items->sum('price');
+        }
+    }
+        // 変数を一つ受け渡す場合はcompact関数又はwithメソッドで送信。
+        // compactの方が可読性が高いのでそちらを使うことが多い。
         return view('items.index', compact('search', 'query', 'message', 'items', 'totalPrice'));
         // view側では通常の変数名で展開可能  {{ $message }}    
 
@@ -64,6 +69,12 @@ class ItemController extends Controller
         $item->delete();
         
         return redirect()->route('items.index')->with('success', '商品を削除しました。');
+    }
+
+    public function cancel()
+    {
+        session()->forget('message'); // フラッシュメッセージを削除
+        return redirect()->route('index'); // 戻るページを指定（例: 'index' にリダイレクト）
     }
 
     /**
@@ -81,7 +92,7 @@ class ItemController extends Controller
         $request->validate([
             'date' => 'required|date',
             'item_name' => 'required|string|max:255',
-            'category_id' => ['required', new Enum(Category::class)],
+            'category_id' => ['required', new Enum(Categories::class)],
             'price' => 'nullable|numeric|min:0', 
             'detail' => 'nullable|string|max:1000', 
         ]); 
@@ -106,7 +117,7 @@ class ItemController extends Controller
     {
         // 一覧画面で指定されたIDの情報を取得
         $item = Item::findOrFail($id);
-
+        $category = Category::all();
         return view('items.edit')->with([
             'item' => $item,
         ]);
@@ -118,7 +129,7 @@ class ItemController extends Controller
         $request->validate([
             'date' => 'required|date',
             'item_name' => 'required|string|max:255',
-            'category_id' => ['required', new Enum(Category::class)],
+            'category_id' => ['required', new Enum(Categories::class)],
             'price' => 'nullable|numeric|min:0', 
             'detail' => 'nullable|string|max:1000', 
         ]);

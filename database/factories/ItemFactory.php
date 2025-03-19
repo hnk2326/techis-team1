@@ -67,13 +67,14 @@ class ItemFactory extends Factory
         $item = $this->faker->randomElement($items);
         // optionalでNULLにならず、デフォルトの１が入る方法（optional(User::inRandomOrder()->first())->id ?? 1,）
         // ユーザーが１人もいないときに（User::exists() ? User::inRandomOrder()->first()->id : 1）
+        // User::inRandomOrder()->value('id') ?? 1, // `value('id')` で `id` だけ取得
         
         // 今回使用
         // テーブルが空なら 1 をセット（!empty($userIds) ? ... : 1）         
 
         return [
             'category_id' => $item['category_id'],
-            'user_id' => User::inRandomOrder()->value('id') ?? 1, // `value('id')` で `id` だけ取得
+            'user_id' => User::exists() ? User::inRandomOrder()->first()->id : 1,
             'date' => Carbon::now()->subDays(rand(1, 30)), // 過去30日間のランダムな日付
             'item_name' => $item['name'],
             'price' => $this->faker->numberBetween(100, 10000),

@@ -84,15 +84,10 @@
                 </div>    
 
             </form>
-            <div class="d-flex justify-content-between">
-                <div class="">        
-                <!-- ページネーションリンクを表示 -->
-                {{ $items->links('pagination::item') }}
-                </div>
-                <div class="">
-                    <p>合計：{{ number_format($totalPrice) }}円</p>
-                </div>
-            </div>
+
+            <p class="text-end">合計：{{ number_format($totalPrice) }}円</p>
+
+        </div>
     </div>
 </div>
 @endsection

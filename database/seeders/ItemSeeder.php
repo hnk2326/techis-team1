@@ -16,7 +16,7 @@ class ItemSeeder extends Seeder
     public function run(): void
     {
         // IDをリセットしてからダミーデータを作成
-        DB::table('items')->truncate(); 
+        // DB::table('items')->truncate(); 
 
         // array_rand($userIds) で ランダムな id を選択users 
         // User::pluck('id')->toArray() で すべての id を配列で取得

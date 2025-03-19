@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\User\UserRegisterController;
 use App\Http\Controllers\UserController;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -45,6 +46,8 @@ Route::get('/category', [App\Http\Controllers\CategoryController::class, 'index'
 Route::delete('/itemDestroy/{id}', [App\Http\Controllers\ItemController::class, 'destroy']);
 
 Route::get('/category', [App\Http\Controllers\CategoryController::class, 'index']);
+
+
 // Route::get('/', [App\Http\Controllers\ItemController::class, 'index']);
 // http://127.0.0.1:8000 から表示される画面をログイン画面にする
 Route::get('/', function () {
@@ -60,6 +63,7 @@ Route::get('/items', [App\Http\Controllers\ItemController::class, 'index']);
     Route::get('/edit/{id}', [App\Http\Controllers\ItemController::class, 'edit']);
     Route::post('/itemEdit/{id}', [App\Http\Controllers\ItemController::class, 'itemEdit']);
 
+    Route::get('/cancel', [App\Http\Controllers\ItemController::class, 'index'])->name('cancel');
 
     // 動作確認用の仮のホーム画面のルーティング
     Route::get('/home', function() {

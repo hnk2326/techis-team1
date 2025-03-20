@@ -27,7 +27,7 @@
 
             <div class="mb-3">
                 <label for="category_id" class="form-label">カテゴリ</label></br>
-                <select name="category_id" id="category_id" class="form-select" required>
+                <select name="category_id" id="category_id" class="w-75 border-secondary form-select" required>
                     <option value="" disabled selected></option>
                     <!-- 日本語でカテゴリの名前が入るように追加しました。 Enumを使う方法です（Laravel９以上なら標準機能として使えます。）-->
                     @foreach (App\Enums\Categories::options() as $value => $label)

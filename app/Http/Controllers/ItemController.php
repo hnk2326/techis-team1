@@ -99,10 +99,10 @@ class ItemController extends Controller
         // バリデーション
         $request->validate([
             'date' => 'required|date',
-            'item_name' => 'required|string|max:255',
+            'item_name' => 'required|string|max:100',
             'category_id' => ['required', new Enum(Categories::class)],
-            'price' => 'nullable|numeric|min:0',
-            'detail' => 'nullable|string|max:1000',
+            'price' => 'nullable|numeric|integer|min:0',
+            'detail' => 'nullable|string|max:500',
         ]);
 
         // 新しい商品を登録
@@ -136,10 +136,10 @@ class ItemController extends Controller
         // バリデーション
         $request->validate([
             'date' => 'required|date',
-            'item_name' => 'required|string|max:255',
+            'item_name' => 'required|string|max:100',
             'category_id' => ['required', new Enum(Categories::class)],
-            'price' => 'nullable|numeric|min:0',
-            'detail' => 'nullable|string|max:1000',
+            'price' => 'nullable|numeric|integer|min:0',
+            'detail' => 'nullable|string|max:500',
         ]);
 
         // 既存の商品情報を取得して、編集内容を保存し一覧画面に戻る

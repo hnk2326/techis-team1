@@ -21,24 +21,12 @@
                 <div class="alert alert-danger">
                     <ul class="error-msg-list">
                         @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
+                        <li >{{ $error }}</li>
                         @endforeach
                     </ul>
                 </div>
             @endif
-            <!-- ここまで　ログインエラー -->
-
-
-        {{-- <!-- みんなが慣れてきたら消します！！ -->
-        <p class="skip-login-cheat alert alert-warning"><b>
-            <span class="bg-info">あとで必ず消します！</span> <br>
-                        ログインの手間が面倒なので、しばらく最初からログイン情報をフォームにいれています。<br>
-                        user: taro@example.com <br>
-                        password: taropass <br>
-            <span class="bg-info">あとで必ず消します！</span>
-        </b></p>
-        <!-- ここまで　消します！！ --> --}}
-
+                <!-- ここまで　ログインエラー -->
 
         <!-- ログイン用のフォームを設置 -->
         <div class="input-form-wrapper w-50 mx-auto row">
@@ -48,11 +36,17 @@
                 <div class="mb-4">
                     <label for="email" class="form-label">メールアドレス</label>
                     <input id="email" type="email" name="email" class="w-100 border-secondary form-control" placeholder="" value="{{ old('email') }}" autofocus>
+                    @error('email')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <div class="mb-4">
                     <label for="password" class="form-label">パスワード</label>
                     <input id="password" type="password" name="password" class="w-100 border-secondary form-control" placeholder="" value="">
+                    @error('password')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <div class="login-btn-wrapper py-2 d-grid d-md-flex justify-content-md-center">

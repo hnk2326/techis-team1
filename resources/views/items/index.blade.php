@@ -59,7 +59,7 @@
                                         <td>{{ \App\Enums\Categories::tryFrom($item->category_id)?->label() }}</td>
                                         <td>{{ $item->id }}</td>
                                         <td>{{ $item->user_id }}</td>
-                                        <td>{{ $item->date }}</td>
+                                        <td>{{ $item->date->format('Y/m/d') }}</td>
                                         <td>{{ $item->item_name }}</td>
                                         <td>{{ $item->price }}</td>
                                         <td>{{ $item->detail }}</td>
@@ -85,7 +85,7 @@
 
             </form>
 
-            <p class="text-end">合計：{{ number_format($totalPrice) }}円</p>
+            <p class="text-end">総数：{{ number_format($totalId) }}件   合計：{{ number_format($totalPrice) }}円</p>
 
         </div>
     </div>

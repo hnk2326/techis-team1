@@ -37,10 +37,12 @@ class ItemController extends Controller
 
             // 管理者ならすべての商品を取得
             $items = $query->orderBy('date', 'desc')->get();
+            $totalId = $query->count('id');
             $totalPrice = $items->sum('price');
         } else {
             // 一般ユーザーは自分が登録した商品のみ取得
             $items = $query->where('user_id', Auth::id())->orderBy('date', 'desc')->get();
+            $totalId = $query->count('id');
             $totalPrice = $items->sum('price');
         }
     } else {     // 未入力の場合
@@ -54,16 +56,18 @@ class ItemController extends Controller
             // 管理者ならすべての商品を取得
             $items = Item::all();
             $query->orderBy('date', 'desc')->get();
+            $totalId = $query->count('id');
             $totalPrice = Item::all()->sum('price');
         } else {
             // 一般ユーザーは自分が登録した商品のみ取得
             $items = $query->where('user_id', Auth::id())->orderBy('date', 'desc')->get();
+            $totalId = $query->count('id');
             $totalPrice = $items->sum('price');
         }
     }
         // 変数を一つ受け渡す場合はcompact関数又はwithメソッドで送信。
         // compactの方が可読性が高いのでそちらを使うことが多い。
-        return view('items.index', compact('search', 'query', 'message', 'items', 'totalPrice'));
+        return view('items.index', compact('search', 'query', 'message', 'items', 'totalPrice', 'totalId'));
         // view側では通常の変数名で展開可能  {{ $message }}
 
     }

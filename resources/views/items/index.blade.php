@@ -85,7 +85,7 @@
 
             </form>
 
-            <p class="text-end">総数：{{ number_format($totalId) }}件   合計：{{ number_format($totalPrice) }}円</p>
+            <p class="text-end">件数：{{ number_format($totalId) }}件   合計：{{ number_format($totalPrice) }}円</p>
 
         </div>
     </div>

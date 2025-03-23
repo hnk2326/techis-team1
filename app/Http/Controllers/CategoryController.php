@@ -29,10 +29,12 @@ class CategoryController extends Controller
 
                 // 管理者ならすべての商品を取得
                 $items = $query->orderBy('date', 'desc')->get();
+                $totalId = $query->count('id');
                 $totalPrice = $query->sum('price');
             } else {
                 // 一般ユーザーは自分が登録した商品のみ取得
                 $items = $query->where('user_id', Auth::id())->orderBy('date', 'desc')->get();
+                $totalId = $query->count('id');
                 $totalPrice = $query->sum('price');
             }
         } else {
@@ -42,10 +44,12 @@ class CategoryController extends Controller
 
                 // 管理者ならすべての商品を取得
                 $items = $query->orderBy('date', 'desc')->get();
+                $totalId = $query->count('id');
                 $totalPrice = $query->sum('price');
             } else {
                 // 一般ユーザーは自分が登録した商品のみ取得
                 $items = $query->where('user_id', Auth::id())->orderBy('date', 'desc')->get();
+                $totalId = $query->count('id');
                 $totalPrice = $query->sum('price');
             }
         }
@@ -53,6 +57,6 @@ class CategoryController extends Controller
 
 
         // 検索結果をビューに渡す
-        return view('items.index', compact('items', 'message', 'totalPrice'));
+        return view('items.index', compact('items', 'message', 'totalPrice', 'totalId'));
     }
 }

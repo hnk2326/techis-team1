@@ -2,9 +2,6 @@
 
 @section('content')
 
-    <p>
-        ホーム画面(仮)、コンフリクトしたら全部消してください（月森
-    </p>
     <div class="main-content">
         {{-- ログイン失敗エラーの表示
         AuthControllerから送られてきた &errorsの中身があれば表示する
@@ -18,7 +15,7 @@
             </ul>
         </div>
         @else <!-- エラーがなければ以下を実行 -->
-            ログインに成功しました。<br>（もしくは直接このページを表示しました）
+            <h2 class="text-success">ようこそ<br>ログインに成功しました。</h2>
         @endif
 
         

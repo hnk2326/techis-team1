@@ -2,10 +2,7 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Item;    // Item:: を使うためにuse宣言
-use Illuminate\Support\Facades\DB;  // DB::table(~~~) を使うためにuse宣言
 
 class DatabaseSeeder extends Seeder
 {
@@ -18,22 +15,20 @@ class DatabaseSeeder extends Seeder
      *      ^^^^^^^^^^^^^^^^^^^
      *
      *      のコマンドで実行される。
+     *      ターミナルで実行するherokuコマンドは --class=のオプションが使えない！！
+     *      heroku run --app team1 php artisan db:seed --class=UserSeeder
+     *                                                 ^^^^^^^^^^^^^^^^^^
+     *      なので、classオプション無しのコマンドでまとめて実行する
+     *      heroku run --app team1 php artisan db:seed
      */
     public function run(): void
     {
- 
-        // \App\Models\User::factory(10)->create();
-
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
-
 
         // $this->call([ ~~ ])の中に自分で作ったSeeder.phpを書いておくと
-        // ターミナル上で  Database\Seeders\UserSeeder...............　など実行状況が表示される
+        // ターミナル上で  Database\Seeders\UserSeeder............... など実行状況が表示される
         $this->call([
             UserTestSeeder::class,
+            ItemSeeder::class,
         ]);
 
 

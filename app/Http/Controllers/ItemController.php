@@ -26,21 +26,32 @@ class ItemController extends Controller
         // クエリビルダーで検索
         $query = Item::query();
 
+        // セレクトボックスから送られた値を取得
+        $categoryId = $request->input('category');
+
     if ($request->filled('search')) {
         $message = '検索結果: ' .$search;
-        $query->where('item_name', 'like', '%' .$search. '%');
-        $totalPrice = Item::where('item_name', 'like', '%' .$search. '%')
-            ->sum('price');
         if (Gate::allows('admin')) {
             // dump(Gate::allows('admin'));
             //  ～  管理者のみに実行して欲しい部分～
 
             // 管理者ならすべての商品を取得
+            $query->where('item_name', 'like', '%' .$search. '%')
+                    ->orWhere('detail', 'like', '%' .$search. '%');
+            $totalPrice = Item::where('item_name', 'like', '%' .$search. '%')
+                ->sum('price');
+
             $items = $query->orderBy('date', 'desc')->get();
             $totalId = $query->count('id');
             $totalPrice = $items->sum('price');
         } else {
             // 一般ユーザーは自分が登録した商品のみ取得
+            $query->where(function($q) use ($search) {
+                $q->where('item_name', 'like', '%' .$search. '%')
+                  ->orWhere('detail', 'like', '%' .$search. '%');
+            })
+            ->where('user_id', auth()->id()); // ログインユーザーのデータのみに絞る
+
             $items = $query->where('user_id', Auth::id())->orderBy('date', 'desc')->get();
             $totalId = $query->count('id');
             $totalPrice = $items->sum('price');
@@ -65,9 +76,9 @@ class ItemController extends Controller
             $totalPrice = $items->sum('price');
         }
     }
-        // 変数を一つ受け渡す場合はcompact関数又はwithメソッドで送信。
         // compactの方が可読性が高いのでそちらを使うことが多い。
-        return view('items.index', compact('search', 'query', 'message', 'items', 'totalPrice', 'totalId'));
+
+        return view('items.index', compact('search', 'query', 'message', 'items', 'totalPrice', 'totalId', 'categoryId'));
         // view側では通常の変数名で展開可能  {{ $message }}
 
     }

@@ -11,7 +11,7 @@
             @csrf
             <div class="mb-3">
                 <label for="date" class="form-label">購入日</label></br>
-                <input type="date" name="date" id="date" class="w-75 border-secondary form-control" value="{{ old('item_name', $item->item_name ?? '') }}" autofocus>
+                <input type="date" name="date" id="date" class="w-75 border-secondary form-control" value="{{ old('date') }}" autofocus>
                 @error('date')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror

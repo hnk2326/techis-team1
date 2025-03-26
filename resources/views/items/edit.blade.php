@@ -11,7 +11,7 @@
             @csrf
             <div class="mb-3">
                 <label for="date" class="form-label">購入日</label></br>
-                <input type="date" name="date" id="date" class="w-75 border-secondary form-control" value="{{ old('date', $item->date) }}">
+                <input type="date" name="date" id="date" class="w-75 border-secondary form-control" value="{{ old('date', optional($item->date)->format('Y-m-d')) }}">
                 @error('date')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
@@ -28,9 +28,8 @@
             <div class="mb-3">
                 <label for="category_id" class="form-label">カテゴリ</label></br>
                 <select name="category_id" id="category_id" class="w-75 border-secondary form-select">
-                    
                     @foreach (App\Enums\Categories::options() as $value => $label)
-                        <option value="{{ $value }}" >{{ $label }}</option>
+                        <option value="{{ $value }}" @selected(old('category_id', $item->category_id) == $value)>{{ $label }}</option>
                     @endforeach
                 </select>
                 @error('category_id')

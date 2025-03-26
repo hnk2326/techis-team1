@@ -40,7 +40,7 @@
 
 
         <!--  メインコンテンツエリア  -->
-        <main class="py-4 overflow-y-auto" style="flex:1;" >
+        <main class="overflow-y-auto" style="flex:1;" >
             @yield('content')
         </main>
         <!--  ここまで メインコンテンツ  -->

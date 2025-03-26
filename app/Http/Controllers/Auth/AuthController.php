@@ -23,19 +23,7 @@ class AuthController extends Controller
      *
      */
     public function __construct()
-    {
-        // middleware('guest')を呼び出している
-        // 　「ログアウト状態の人だけ許可をする」という機能
-        //
-        // 今このコントローラーを呼び出した人が、すでにログインしている場合
-        // もう一度ログインをする必要はないので、操作ミスということにしてホーム画面へリダイレクト・遷移させる
-
-        // [月森]　念のため実装を見送ります
-
-        // session()->flash('message', 'すでにログインしています。');
-        // $this->middleware('guest');
-    }
-
+    {}
 
     /**
      * ログイン認証を行う
@@ -47,7 +35,7 @@ class AuthController extends Controller
      * @param Request $request ログイン画面から送られてきたPOST-formの中身
      * @return redirect|$error
      */
-    public function login(Request $request):RedirectResponse // :RedirectResponse 返り値はResponse型ですよ、というメモ
+    public function login(Request $request):RedirectResponse // :RedirectResponse 返り値はResponse型
     {
         // バリデーション、エラーがあったらログイン画面に戻る（validate( )の標準機能）
         $this->validate($request,[
@@ -55,10 +43,6 @@ class AuthController extends Controller
             'password' => 'required', // 必須
         ]);
 
-        // ログイン操作が短時間に繰り返されたときの危険回避
-        // Auth::attempt 取得した情報と今のログインユーザーの情報を照らし合わせる
-        //
-        // (03/08)思い違いをしていました
         // Auth::attempt でデータベースの情報とリクエストされた情報を照合し
         // 合致していたらtrue → ログインするための ifコードを実行
         // でなければ falseで ifをスキップ
@@ -66,8 +50,7 @@ class AuthController extends Controller
             // ブラウザのセッション情報を再生成(regenerate)して、ログインしようとする動作をリセットする
             $request->session()->regenerate();
             // ログイン後の画面に遷移させる
-            // return redirect()->intended('home'); 都合が悪いので変更します。（月森
-            return redirect('home');
+            return redirect('home')->with('login_done','ログインしました');
         }
 
         // ユーザー情報のメールアドレスかパスワードが間違っていたらエラーメッセージを表示させる

@@ -2,30 +2,36 @@
 * サイドバーのCSS
 ------------------------------ */
 
-/* サイドバーの各画面へのリンク */
-.side-page-list-wrapper a {
-    color: blue;
-    font-weight: bolder;
-}
-/* ログインの注意書き部分 縮小 0.8倍 そのうち消します */
-.skip-login-cheat {
-    transform: scale(0.8);
-}
 
-.main-content {
-    width: 100%;
-    height:100vh;
-    background-image: url(../img/home_image21.jpg);  
+.main-wall{
+    background-image: url(../img/home_image01.jpg);
     /* 画面、ブラウザのサイズに基づいて、背景画像を調整。 画像を画面に合わせて拡大 */
     background-size: cover;
-    /* 画像を常に上下左右の中央に配置させる。 */
-    background-position: center center; 
+    /* 画像を常に左下を固定に配置させる。画面が小さくなると右が消える */
+    background-position: left bottom;
     /* 画像を繰り返し表示しないようにする。 */
-    background-repeat: no-repeat;  
-    /* ページなどのコンテンツの高さが画像より大きい場合は自動で調整してくれる。 */
-    /* background-attachment: fixed;  */
+    background-repeat: no-repeat;
+    /* コンテンツのスクロールだけ許可、背景はスクロールしない */
+    background-attachment: local;
+}
 
-    padding-left: 250px;  /* サイドバーの幅に合わせて左側に余白を追加 */
-    margin: 0;
-    padding: 0;
+
+main:not(:has(.main-wall)) {
+    background-image: url(../img/home_image21.jpg);
+    /* 高さを画面のサイズ100%に、幅はautoで縦横比そのまま */
+    background-size: auto 100%;
+    /* 画像を常に右下を固定に配置させる。画面が小さくなると左が消える */
+    background-position: right bottom;
+    /* 画像を繰り返し表示しないようにする。 */
+    background-repeat: no-repeat;
+    /* 背景画像のスクロールを禁止、コンテンツはスクロールする */
+    background-attachment: fixed;
+
+    /* 背景画像を薄める（透明っぽく） */
+    /* 背景色を白系にして、色をブレンドして白っぽく薄める */
+    background-color: rgba(255, 255, 255, 0.83);
+    background-blend-mode: lighten;
+
+    /* テンプレート調整したので、修正 */
+    padding-top:1.5rem;
 }

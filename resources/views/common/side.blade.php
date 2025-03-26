@@ -18,7 +18,7 @@
 
 
     <!-- ログインユーザー表示エリア -->
-    <div class="side-user-show w-75 text-center mx-auto row py-2">
+    <div class="side-user-show w-75 text-center mx-auto row {{-- py-2 --}}">
         <div class="mb-1">ユーザー名</div>
 
         <!-- Laravelの機能で、今のユーザーの情報を取得するファサード -->
@@ -36,7 +36,7 @@
 
 
     {{-- 各ページへのリンクエリア --}}
-    <div class="side-page-list-wrapper nav-wrapper my-5 mx-auto row w-75 ">
+    <div class="side-page-list-wrapper nav-wrapper my-5 mx-auto row w-75 link-primary fw-bolder ">
         {{-- 商品管理機能ページたち --}}
         <ul class="list-unstyled my-4">
             <li>

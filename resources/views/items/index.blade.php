@@ -32,7 +32,7 @@
                         <select name="category" class="form-select-success form-select-sm mb-3" aria-label=".form-select-sm example" required>
                             <option value="" disabled selected>カテゴリ検索</option>
                             @foreach (App\Enums\Categories::options() as $value => $label)
-                            <option value="{{ $value }}" >{{ $label }}</option>
+                            <option value="{{ $value }}" @selected($categoryId == $value)>{{ $label }}</option>
                             @endforeach
                         </select>
                         <button type="submit" class="btn btn-outline-secondary" style="padding: 2px 10px;">検索</button>
@@ -81,12 +81,9 @@
                             </table>
                         </div>
                 @endif
-                </div>    
-
+                </div>
             </form>
-
             <p class="text-end">件数：{{ number_format($totalId) }}件   合計：{{ number_format($totalPrice) }}円</p>
-
         </div>
     </div>
 </div>

@@ -30,5 +30,5 @@ class Item extends Model
     // 所属テーブルから主テーブルへの関係を定義するときに使う
     public function category() : Relation {
         return $this->belongsTo(Category::class);
-    }  
+    }
 }
